@@ -28,9 +28,22 @@ public class RegistroDeClientes {
     }
 
     /**
-     * Este método é responsável por visualizar detalhes dos clientes do registro.
+     * Este método é responsável por visualizar detalhes de um cliente do registro.
      */
-    public void visualizarDetalhesDoCliente(){
+    public void visualizarDetalhesDoCliente(Cliente clienteSelecionado){
+        for(Cliente cliente : clientes){
+            if(cliente.getClass() == ClienteWinx.class && cliente.cpf.equals(clienteSelecionado.cpf)){
+                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra());
+            }
+            else if(cliente.getClass() == Cliente.class && cliente.cpf.equals(clienteSelecionado.cpf)){
+                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas());
+            }
+
+
+        }
+    }
+
+    public void printarListaDeClientes(){
         for(Cliente cliente : clientes){
             if(cliente.getClass() == ClienteWinx.class){
                 System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra());
