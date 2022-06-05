@@ -1,6 +1,10 @@
 package br.winxbank.sistemaclientes;
 
+import br.winxbank.sistemabancario.Banco;
+import br.winxbank.sistemabancario.Conta;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @author Natália
@@ -9,14 +13,31 @@ import java.util.ArrayList;
 public class RegistroDeClientes {
 
     private static RegistroDeClientes instancia;
-    private ArrayList<Cliente> clientes;
+    private ArrayList<Cliente> clientes = new ArrayList<>();
 
     /**
      * Este método é responsável por cadastrar um cliente no registro de clientes.
-     * @param cliente
+     * Se o cliente criar uma conta com mais de 100 mil, ele se torna ClienteWix.
      */
-    public void cadastrarCliente(Cliente cliente){
-        clientes.add(cliente);
+    public void cadastrarCliente(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Você está cadastrando um cliente\nDigite o nome:");
+        String nome = sc.nextLine();
+        System.out.println("Digite o cpf:");
+        String cpf = sc.nextLine();
+        Cliente cliente = new Cliente(nome, cpf);
+        Conta conta = Banco.getInstancia().abrirNovaConta();
+        cliente.setContas(conta);
+        if(cliente.acessarContas().getSaldo() >= 100000){
+            System.out.println("Parabéns, você tem direito a ser ClienteWinx!");
+            ClienteWinx clienteWinx = new ClienteWinx(nome, cpf, 0);
+            clienteWinx.setContas(conta);
+            clientes.add(clienteWinx);
+        }
+        else if(cliente.acessarContas().getSaldo() < 100000) {
+            clientes.add(cliente);
+        }
+
     }
 
     /**
@@ -30,17 +51,19 @@ public class RegistroDeClientes {
     /**
      * Este método é responsável por visualizar detalhes de um cliente do registro.
      */
-    public void visualizarDetalhesDoCliente(Cliente clienteSelecionado){
+    public Cliente visualizarDetalhesDoCliente(String cpf){
         for(Cliente cliente : clientes){
-            if(cliente.getClass() == ClienteWinx.class && cliente.cpf.equals(clienteSelecionado.cpf)){
+            if(cliente.getClass() == ClienteWinx.class && cliente.cpf.equals(cpf)){
                 System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra());
+                return cliente;
             }
-            else if(cliente.getClass() == Cliente.class && cliente.cpf.equals(clienteSelecionado.cpf)){
+            else if(cliente.getClass() == Cliente.class && cliente.cpf.equals(cpf)){
                 System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas());
+                return cliente;
             }
-
 
         }
+        return null;
     }
 
     public void printarListaDeClientes(){
@@ -54,13 +77,6 @@ public class RegistroDeClientes {
 
 
         }
-    }
-
-    /**
-     * TODO: criar método de atulização de arquivo de registro de clientes.
-     */
-    public void atualizarArquivo(){
-
     }
 
     public ArrayList<Cliente> getClientes() {
