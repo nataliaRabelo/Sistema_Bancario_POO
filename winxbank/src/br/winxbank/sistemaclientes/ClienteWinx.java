@@ -20,10 +20,9 @@ public class ClienteWinx extends Cliente {
      *
      * @param nome
      * @param cpf
-     * @param contas
      */
-    public ClienteWinx(String nome, String cpf, ArrayList<Conta> contas, int pontosDeCompra) {
-        super(nome, cpf, contas);
+    public ClienteWinx(String nome, String cpf, int pontosDeCompra) {
+        super(nome, cpf);
         this.pontosDeCompra = pontosDeCompra;
     }
 

@@ -4,7 +4,7 @@ package br.winxbank.sistemabancario;
  * @author Dani
  * Esta classe é responsável por representar uma entidade ContaCorrente.
  */
-public class ContaCorrente extends Conta{
+public class ContaCorrente extends Conta implements OperacoesAutomaticas{
 
     private CartaoCredito cartaoCredito;
 
@@ -15,8 +15,8 @@ public class ContaCorrente extends Conta{
      * @param cartaoDebito
      * @param dividaDeEmprestimo
      */
-    public ContaCorrente(double saldo, Cartao cartaoDebito, double dividaDeEmprestimo, CartaoCredito cartaoCredito) {
-        super(saldo, cartaoDebito, dividaDeEmprestimo);
+    public ContaCorrente(int numeroConta, double saldo, Cartao cartaoDebito, double dividaDeEmprestimo, CartaoCredito cartaoCredito) {
+        super(numeroConta, saldo, cartaoDebito, dividaDeEmprestimo);
         this.cartaoCredito = cartaoCredito;
     }
 
@@ -26,22 +26,22 @@ public class ContaCorrente extends Conta{
      */
     public void pagarFatura(double valor){
         this.saldo-=valor;
-        this.cartaoCredito.setFatura(valor);
+        this.cartaoCredito.setFatura(-valor);
 
-    }
-
-    /**
-     * Método responsável por creditar o valor da fatura do cartão de crédito.
-     * @param valor
-     */
-    public void creditar(double valor){
-        this.cartaoCredito.setFatura(valor);
     }
 
     /**
      * TODO: método de descontar taxa.
      */
     public void descontarTaxa(){
+
+    }
+
+    /**
+     * TODO: implementar movimentacao ao banco conforme taxa for descontada
+     */
+    @Override
+    public void movimentacaoBancaria() {
 
     }
 }
