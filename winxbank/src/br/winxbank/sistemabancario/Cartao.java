@@ -6,12 +6,26 @@ package br.winxbank.sistemabancario;
  */
 public class Cartao {
 
-    private int numero;
-    private int csv;
+    protected int numero;
+    protected int csv;
+    protected Conta conta;
 
+    /**
+     * Construtor padrão do cartão
+     * @param numero
+     * @param csv
+     * @param conta
+     */
     public Cartao(int numero, int csv){
         this.numero = numero;
         this.csv = csv;
     }
 
+    public void debitarConta(double valor){
+        conta.setSaldo(valor);
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
 }
