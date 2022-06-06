@@ -17,12 +17,11 @@ public class Main {
         RegistroDeClientes.getInstancia();
         Banco.getInstancia();
         int decisao = 1;
-        final Locale myLocale = new Locale("pt", "BR");
         Cliente clienteAtual = new Cliente();
         while (decisao == 1 || decisao == 2){
             Scanner sc = new Scanner(System.in);
             if(clienteAtual.getNome() != null){
-                System.out.println("      Bem-vindo ao Winx Bank!\n\n      Olá, "+ clienteAtual.getNome() + "\n\nCPF: " + clienteAtual.getCpf() + "\nConta nº: "+ clienteAtual.acessarContas().getNumeroConta() +"\nSaldo: "+clienteAtual.acessarContas().getSaldo() + "\n\n      Digite o que deseja fazer:\n----------------- MENU INICIAL -----------------\n1 - (criar um usuario) \n2 - (logar em um usuario)\n--------------------- MENU ---------------------\n");
+                System.out.println("      Bem-vindo ao Winx Bank!\n\n      Olá, "+ clienteAtual.getNome() + "Digite o que deseja fazer:\n----------------- MENU INICIAL -----------------\n1 - (criar um usuario) \n2 - (logar em um usuario)\n--------------------- MENU ---------------------\n");
             }
             else if(clienteAtual.getNome() == null){
                 System.out.println("      Bem-vindo ao Winx Bank!\n\n      Digite o que deseja fazer:\n----------------- MENU INICIAL -----------------\n1 - (criar um usuario) \n2 - (logar em um usuario)\n--------------------- MENU ---------------------\n");
@@ -37,8 +36,10 @@ public class Main {
                     System.out.println("Digite o cpf para logar:");
                     sc.nextLine();
                     String cpf = sc.nextLine();
+                    System.out.println("Cliente atual: ");
                     Cliente cliente = RegistroDeClientes.getInstancia().visualizarDetalhesDoCliente(cpf);
                     clienteAtual = new Cliente(cliente);
+                    clienteAtual.setContas(cliente.acessarContas());
                     break;
             }
         }

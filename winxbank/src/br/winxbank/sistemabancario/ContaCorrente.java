@@ -7,6 +7,7 @@ package br.winxbank.sistemabancario;
 public class ContaCorrente extends Conta implements OperacoesAutomaticas{
 
     private CartaoCredito cartaoCredito;
+    private final String tipoDaConta = "Poupanca";
 
     /**
      * Construtor padrão da classe conta.
@@ -43,5 +44,13 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas{
     @Override
     public void movimentacaoBancaria() {
 
+    }
+
+    public CartaoCredito getCartaoCredito() {
+        return cartaoCredito;
+    }
+
+    public String getTipoDaConta() {
+        return tipoDaConta;
     }
 }

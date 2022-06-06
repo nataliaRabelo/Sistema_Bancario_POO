@@ -14,7 +14,6 @@ public class Cartao {
      * Construtor padrão do cartão
      * @param numero
      * @param csv
-     * @param conta
      */
     public Cartao(int numero, int csv){
         this.numero = numero;

@@ -7,6 +7,7 @@ package br.winxbank.sistemabancario;
 public class ContaPoupanca extends Conta{
 
 
+    private final String tipoDaConta = "Poupanca";
     /**
      * Construtor padrão da classe conta.
      *
@@ -24,5 +25,9 @@ public class ContaPoupanca extends Conta{
     public void acrescentarRendimento(){
 
         //TODO: PEGAR JURUS DA INTERFACE E COLOCAR AQUI
+    }
+
+    public String getTipoDaConta() {
+        return tipoDaConta;
     }
 }

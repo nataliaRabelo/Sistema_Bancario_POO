@@ -1,6 +1,8 @@
 package br.winxbank.sistemabancario;
 
 
+import br.winxbank.random.MathRandomWithSeed;
+
 import java.util.Scanner;
 
 /**
@@ -35,14 +37,12 @@ public class Banco {
         decisao = sc.nextInt();
         if(decisao == 1){
             //TODO: tornar csv, numeroCartao e numeroConta randomicos e verificar se ja existe o codigo em alguma conta no registro.
-            System.out.println("Você está criando uma conta corrente...\nDigite o numero dos cartoes de debito e credito que você deseja: ");
-            int numeroCartao = sc.nextInt();
-            System.out.println("Digite o numero dos csv dos seus cartoes de debito e credito que você deseja: ");
-            int csv = sc.nextInt();
+            System.out.println("Você está criando uma conta corrente...");
+            int numeroCartao = MathRandomWithSeed.generateRandom();
+            int csv = MathRandomWithSeed.generateRandom();
             Cartao cartao = new Cartao(numeroCartao, csv);
             CartaoCredito cartaoCredito = new CartaoCredito(numeroCartao, csv);
-            System.out.println("Digite o numero da conta que você deseja: ");
-            int numeroConta = sc.nextInt();
+            int numeroConta = MathRandomWithSeed.generateRandom();
             System.out.println("Digite o saldo que deseja colocar na sua conta ");
             double saldo = sc.nextDouble();
             ContaCorrente contaCorrente = new ContaCorrente(numeroConta, saldo, cartao, 0, cartaoCredito);
@@ -52,13 +52,11 @@ public class Banco {
         }
         else if(decisao == 2){
             //TODO: tornar csv, numeroCartao e numeroConta randomicos e verificar se ja existe o codigo em alguma conta no registro.
-            System.out.println("Você está criando uma conta poupanca...\nDigite o numero do cartao de debito que você deseja: ");
-            int numeroCartao = sc.nextInt();
-            System.out.println("Digite o numero do csv do cartao de debito que você deseja: ");
-            int csv = sc.nextInt();
+            System.out.println("Você está criando uma conta poupanca...");
+            int numeroCartao = MathRandomWithSeed.generateRandom();
+            int csv = MathRandomWithSeed.generateRandom();
             Cartao cartao = new Cartao(numeroCartao, csv);
-            System.out.println("Digite o numero da conta que você deseja: ");
-            int numeroConta = sc.nextInt();
+            int numeroConta = MathRandomWithSeed.generateRandom();
             System.out.println("Digite o saldo que deseja colocar na sua conta ");
             double saldo = sc.nextDouble();
             ContaPoupanca contaPoupanca = new ContaPoupanca(numeroConta, saldo, cartao, 0);

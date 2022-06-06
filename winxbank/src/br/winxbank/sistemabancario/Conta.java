@@ -106,6 +106,14 @@ public abstract class Conta {
         return numeroConta;
     }
 
+    public double getDividaDeEmprestimo() {
+        return dividaDeEmprestimo;
+    }
+
+    public Cartao getCartao() {
+        return cartao;
+    }
+
     public void setSaldo(double valor) {
         if(valor <= this.saldo){
             this.saldo -= saldo;

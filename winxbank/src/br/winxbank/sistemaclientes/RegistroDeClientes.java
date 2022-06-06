@@ -2,6 +2,8 @@ package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.Banco;
 import br.winxbank.sistemabancario.Conta;
+import br.winxbank.sistemabancario.ContaCorrente;
+import br.winxbank.sistemabancario.ContaPoupanca;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -54,27 +56,49 @@ public class RegistroDeClientes {
     public Cliente visualizarDetalhesDoCliente(String cpf){
         for(Cliente cliente : clientes){
             if(cliente.getClass() == ClienteWinx.class && cliente.cpf.equals(cpf)){
-                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra());
-                return cliente;
+                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra() + "\nContas:");
+                for(Conta conta : cliente.getContas()){
+                    if(conta.getClass() == ContaPoupanca.class){
+                        System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "]");
+                        return cliente;
+                    }
+                    else if(conta.getClass() == ContaCorrente.class){
+                        System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "| Cartao Credito: " + ((ContaCorrente) conta).getCartaoCredito() + "]");
+                        return cliente;
+                    }
+                }
             }
             else if(cliente.getClass() == Cliente.class && cliente.cpf.equals(cpf)){
-                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas());
-                return cliente;
+                System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "\nContas:");
+                for(Conta conta : cliente.getContas()){
+                    if(conta.getClass() == ContaPoupanca.class){
+                        System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "]");
+                        return cliente;
+                    }
+                    else if(conta.getClass() == ContaCorrente.class){
+                        System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "| Cartao Credito: " + ((ContaCorrente) conta).getCartaoCredito() + "]");
+                        return cliente;
+                    }
+                }
             }
 
         }
         return null;
     }
 
+    /**
+     * Este método é responsável por printar lista de clientes.
+     */
     public void printarListaDeClientes(){
+        System.out.println("------------------ Clientes --------------------");
         for(Cliente cliente : clientes){
             if(cliente.getClass() == ClienteWinx.class){
-                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra());
+                System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "| Contas: " + cliente.getContas() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra());
             }
             else{
-                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Contas: " + cliente.getContas());
+                System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "| Contas: " + cliente.getContas());
             }
-
+            System.out.println("------------------------------------------------");
 
         }
     }
