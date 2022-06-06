@@ -6,7 +6,7 @@ import java.util.HashSet;
  * @author Natália Bruno Rabelo.
  * Esta classe é responsável por conter métodos relacionados à geração de números aleatórios e controlar a repetição desses numeros.
  */
-public class MathRandomWithSeed {
+public class MathRandomCsvWithSeed {
     static HashSet<Integer> numeros = new HashSet<Integer>();
     /**
      * Este método é responsável por determinar um número mínimo, máximo e inicializar uma seed para geração de numeros aleatórios a partir dessa seed.
@@ -15,8 +15,8 @@ public class MathRandomWithSeed {
      */
     public static int generateRandom(){
 
-        int min = 1;
-        int max = 1000;
+        int min = 100;
+        int max = 999;
         int seed = 5;
 
         int random = randomNext(min, max, seed);

@@ -7,7 +7,7 @@ package br.winxbank.sistemabancario;
 public class ContaCorrente extends Conta implements OperacoesAutomaticas{
 
     private CartaoCredito cartaoCredito;
-    private final String tipoDaConta = "Poupanca";
+    private final String tipoDaConta = "Corrente";
 
     /**
      * Construtor padrão da classe conta.
