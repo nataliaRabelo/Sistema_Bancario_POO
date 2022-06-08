@@ -1,12 +1,16 @@
 package br.winxbank.sistemabancario;
 
+import br.winxbank.tempo.Ano;
+
 /**
  * @author Carol
  * Esta classe é responsável por representar uma entidade CartaoCredito.
  */
-public class CartaoCredito extends Cartao{
+public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
 
     private double fatura;
+    private String mesDaFatura;
+    private int indexMesDaFatura;
     private boolean faturaPaga;
     private double limite;
     private Conta conta;
@@ -22,9 +26,12 @@ public class CartaoCredito extends Cartao{
 
     /**
      * Método responsável por creditar um valor da fatura do cartão de crédito.
+     * Quando esse método for chamado, é atribuído um mês referente àquela fatura.
      * @param valor
      */
     public void creditar(double valor){
+        this.indexMesDaFatura = Ano.getInstancia().getIndexMesAtual();
+        this.mesDaFatura = Ano.getInstancia().getMesAtual();
         setFatura(valor);
     }
 
@@ -61,4 +68,18 @@ public class CartaoCredito extends Cartao{
     public double getFatura() {
         return fatura;
     }
+
+    public void cobrarJurus(){
+        if (this.faturaPaga == false && Ano.getInstancia().getIndexMesAtual() > this.indexMesDaFatura){
+            double faturaAnterior = this.fatura;
+            this.fatura *= taxaJurus;
+            movimentacaoBancaria(this.fatura - faturaAnterior);
+        }
+
+    }
+    
+    public void movimentacaoBancaria(double valor) {
+        Banco.getInstancia().setReceitas(valor);
+    }
+
 }
