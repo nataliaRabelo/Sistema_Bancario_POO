@@ -52,6 +52,8 @@ public class RegistroDeClientes {
 
     /**
      * Este método é responsável por visualizar detalhes de um cliente do registro.
+     * @param cpf
+     * @return
      */
     public Cliente visualizarDetalhesDoCliente(String cpf){
         for(Cliente cliente : clientes){
@@ -108,7 +110,7 @@ public class RegistroDeClientes {
     }
 
     /**
-     * Singleton que só permite uma instância do objeto ser criada, quando o atributo estático instanciaEvento tem o valor nulo.
+     * Singleton que só permite uma instância do objeto ser criada, quando o atributo estático instancia tem o valor nulo.
      * @return
      */
     public static RegistroDeClientes getInstancia() {

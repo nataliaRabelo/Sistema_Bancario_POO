@@ -67,8 +67,21 @@ public class Banco {
         }
     return null;
     }
+
+    public void setReceitas(double valor) {
+        if(valor >= 0){
+            this.receitas = valor;
+        }
+    }
+
+    public void setDespesas(double valor) {
+        if(valor >= 0){
+            this.despesas = valor;
+        }
+    }
+
     /**
-     * Singleton que só permite uma instância do objeto ser criada, quando o atributo estático instanciaEvento tem o valor nulo.
+     * Singleton que só permite uma instância do objeto ser criada, quando o atributo estático instancia tem o valor nulo.
      * @return
      */
     public static Banco getInstancia() {
