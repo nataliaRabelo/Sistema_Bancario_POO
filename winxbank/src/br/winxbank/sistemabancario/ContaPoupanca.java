@@ -4,7 +4,7 @@ package br.winxbank.sistemabancario;
  * @author Dani.
  * Classe responsável por representar uma conta poupança
  */
-public class ContaPoupanca extends Conta{
+public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
 
 
     private final String tipoDaConta = "Poupanca";
@@ -23,11 +23,18 @@ public class ContaPoupanca extends Conta{
      * Método responsável por acrescentar rendimento sobre o saldo contido nesta conta.
      */
     public void acrescentarRendimento(){
+        this.saldo *= taxaJurus;
+        double rendimentoDesteCaso = this.saldo * rendimentoMensalPoupanca;
+        movimentacaoBancaria(rendimentoDesteCaso);
 
-        //TODO: PEGAR JURUS DA INTERFACE E COLOCAR AQUI
     }
 
     public String getTipoDaConta() {
         return tipoDaConta;
+    }
+
+    @Override
+    public void movimentacaoBancaria(double valor) {
+
     }
 }
