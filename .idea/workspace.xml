@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6e07c2db-b4ac-4515-991c-e3d6d68fc97b" name="Changes" comment="" />
+    <list default="true" id="6e07c2db-b4ac-4515-991c-e3d6d68fc97b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/repository/ArquivoDeClientes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/repository/ArquivoDeMovimentacaoDoCliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemabancario/Conta.class" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemabancario/Conta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemabancario/OperacoesAutomaticas.class" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemabancario/OperacoesAutomaticas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemaclientes/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemaclientes/Cliente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemaclientes/ClienteWinx.class" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/out/production/winxbank/br/winxbank/sistemaclientes/ClienteWinx.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/Banco.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/Banco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/CartaoCredito.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/CartaoCredito.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/Conta.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/Conta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/ContaPoupanca.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/ContaPoupanca.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/Movimentacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemabancario/Movimentacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemaclientes/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemaclientes/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemaclientes/ClienteWinx.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemaclientes/ClienteWinx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemaclientes/RegistroDeClientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/sistemaclientes/RegistroDeClientes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winxbank/src/br/winxbank/tempo/Ano.java" beforeDir="false" afterPath="$PROJECT_DIR$/winxbank/src/br/winxbank/tempo/Ano.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

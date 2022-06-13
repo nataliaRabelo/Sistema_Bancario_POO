@@ -32,19 +32,18 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas{
     }
 
     /**
-     * TODO: método de descontar taxa.
+     * TODO: método de descontar taxa, pegar taxa de manutencao de conta da interface.
      */
     public void descontarTaxa(){
-
+        this.saldo -= taxaManutencaoConta;
+        movimentacaoBancaria(taxaManutencaoConta);
     }
 
-    /**
-     * TODO: implementar movimentacao ao banco conforme taxa for descontada
-     */
     @Override
-    public void movimentacaoBancaria() {
-
+    public void movimentacaoBancaria(double valor) {
+        Banco.getInstancia().setReceitas(valor);
     }
+
 
     public CartaoCredito getCartaoCredito() {
         return cartaoCredito;

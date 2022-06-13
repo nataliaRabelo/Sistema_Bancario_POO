@@ -26,12 +26,29 @@ public class ClienteWinx extends Cliente {
         this.pontosDeCompra = pontosDeCompra;
     }
 
+    /**
+     * Cosntrutor alternativo para salvar um determinado cliente atual no sistema de login.
+     * @param cliente
+     */
+    public ClienteWinx(Cliente cliente){
+        this.nome = cliente.getNome();
+        this.cpf = cliente.getCpf();
+    }
+
     public int getPontosDeCompra() {
         return pontosDeCompra;
     }
 
-    public void converterPontosEmSaldo(){
+    public void obterPontosDeCompra(){
+        this.pontosDeCompra++;
+    }
+
+    /**
+     * Método responsável por converter os pontos do ClienteWinx em saldo na conta.
+     * @param conta
+     */
+    public void converterPontosEmSaldo(Conta conta){
         float saldoConvertido = this.pontosDeCompra * this.BONUSDECOMPRA;
-        //TODO: setar saldo convertido em saldo da conta
+        conta.setSaldo(saldoConvertido);
     }
 }
