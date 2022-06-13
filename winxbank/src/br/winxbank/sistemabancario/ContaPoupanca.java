@@ -35,6 +35,6 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
 
     @Override
     public void movimentacaoBancaria(double valor) {
-
+        Banco.getInstancia().setDespesas(valor);
     }
 }

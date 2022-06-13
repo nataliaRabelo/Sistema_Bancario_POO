@@ -31,13 +31,30 @@ public class Cliente {
     public Cliente(Cliente cliente){
         this.nome = cliente.getNome();
         this.cpf = cliente.getCpf();
-
     }
     /**
      * Cosntrutor alternativo vazio para inicializar a variável clienteatual no programa principal do cliente atual no sistema de login.
      */
     public Cliente(){
 
+    }
+
+    public void apagarConta(Conta conta) {
+        this.contas.remove(conta);
+    }
+
+    /**
+     * Método responsável por selecionar uma conta.
+     * @param numeroConta
+     * @return
+     */
+    public Conta selecionarConta(int numeroConta) {
+        for (Conta conta : this.contas) {
+            if (conta.getNumeroConta() == numeroConta) {
+                return conta;
+            }
+        }
+        return null;
     }
 
     public String getNome() {
