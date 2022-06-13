@@ -36,6 +36,7 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
     }
 
     /**
+     * TODO: AJUSTAR LIMITE
      * Método responsável por ajustar o limite do cartão
      */
     public void ajustarLimite(){
@@ -69,6 +70,9 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
         return fatura;
     }
 
+    /**
+     * Método responsável por cobrar jurus de uma fatura conforme meses passados.
+     */
     public void cobrarJurus(){
         if (this.faturaPaga == false && Ano.getInstancia().getIndexMesAtual() > this.indexMesDaFatura){
             double faturaAnterior = this.fatura;
@@ -77,7 +81,11 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
         }
 
     }
-    
+
+    /**
+     * Método responsável por gerar receita ao banco do valor pago a mais da cobrança de jurus em cima de uma fatura.
+     * @param valor
+     */
     public void movimentacaoBancaria(double valor) {
         Banco.getInstancia().setReceitas(valor);
     }
