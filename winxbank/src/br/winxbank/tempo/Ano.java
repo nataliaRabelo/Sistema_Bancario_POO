@@ -6,27 +6,38 @@ package br.winxbank.tempo;
  */
 public class Ano {
 
-    //TODO: Registrar mes atual em arquivo desde onde o programa parou.
+    //TODO: Registrar mes atual em arquivo desde onde o programa parou, bem como registrar também onde contador parou.
     private int indexInicial = 0; //index usado na primeira vez que rodar o programa e não existir nenhum arquivo com o registro do mes atual.
     private static Ano instancia;
     private String mesAtual;
     private int indexMesAtual;
     private String[] meses = {"Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
+    private static long count = 0;
 
     /**
      * Este método é responsável por fazer os meses do ano passar conforme um index de uma lista de meses que incrementa na medida em que o ususario interaje com o programa.
+     * Se o atributo contador for multiplo de 5, o index muda e o valor do mês atual também muda. Este controle foi atribuído para que os meses não passem tão rápido conforme cada loop.
+     * Além disso, caso o contador alcance o numero máximo que um long pode armazenar, este é zerado.
      * @return indexMesAtual
      */
     public int fazerMesPassar(){
-        if(this.indexInicial == 0){
-            this.indexMesAtual = this.indexInicial;
-            this.indexInicial = 1;
+        if(count % 5 == 0){
+            if(this.indexInicial == 0){
+                this.indexMesAtual = this.indexInicial;
+                this.indexInicial = 1;
+            }
+            else if (this.indexMesAtual == 11){
+                this.indexMesAtual = 0;
+            }
+            else{
+                this.indexMesAtual++;
+            }
         }
-        else if (this.indexMesAtual == 11){
-            this.indexMesAtual = 0;
+        if(count == Long.MAX_VALUE){
+            count = 0;
         }
         else{
-            this.indexMesAtual++;
+            count++;
         }
         this.mesAtual = this.meses[this.indexMesAtual];
         return this.indexMesAtual;

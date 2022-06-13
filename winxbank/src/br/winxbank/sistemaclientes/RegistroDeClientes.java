@@ -43,30 +43,47 @@ public class RegistroDeClientes {
     }
 
     /**
+     * Este método é responsável por atualizar dados de um cliente do registro de clientes
+     * @param cliente
+     */
+    public void atualizarCliente(Cliente cliente){
+        System.out.println("Seu usuario está sendo atualizado...");
+        for(Cliente clienteDaLista : clientes){
+            if(clienteDaLista.cpf.equals(cliente.cpf)){
+                clientes.remove(clienteDaLista);
+                clientes.add(cliente);
+            }
+        }
+
+    }
+
+    /**
      * Este método é responsável por remover um cliente do registro de clientes.
      * @param cliente
      */
     public void removerCliente(Cliente cliente){
-        clientes.remove(cliente);
+        System.out.println("Seu usuario está sendo apagado...");
+        for(Cliente clienteDaLista : clientes){
+            if(clienteDaLista.cpf.equals(cliente.cpf)){
+                clientes.remove(cliente);
+            }
+        }
     }
 
     /**
-     * Este método é responsável por visualizar detalhes de um cliente do registro.
+     * Este método é responsável por visualizar detalhes de um cliente do registro a partir do seu CPF.
      * @param cpf
-     * @return
      */
-    public Cliente visualizarDetalhesDoCliente(String cpf){
+    public void visualizarDetalhesDoCliente(String cpf){
         for(Cliente cliente : clientes){
             if(cliente.getClass() == ClienteWinx.class && cliente.cpf.equals(cpf)){
                 System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra() + "\nContas:");
                 for(Conta conta : cliente.getContas()){
                     if(conta.getClass() == ContaPoupanca.class){
                         System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "]");
-                        return cliente;
                     }
                     else if(conta.getClass() == ContaCorrente.class){
                         System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "| Cartao Credito: " + ((ContaCorrente) conta).getCartaoCredito() + "]");
-                        return cliente;
                     }
                 }
             }
@@ -75,21 +92,32 @@ public class RegistroDeClientes {
                 for(Conta conta : cliente.getContas()){
                     if(conta.getClass() == ContaPoupanca.class){
                         System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "]");
-                        return cliente;
                     }
                     else if(conta.getClass() == ContaCorrente.class){
                         System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "| Cartao Credito: " + ((ContaCorrente) conta).getCartaoCredito() + "]");
-                        return cliente;
                     }
                 }
             }
 
         }
+    }
+
+    /**
+     * Este método é responsável por retornar um cliente do registro a partir do CPF.
+     * @param cpf
+     * @return Cliente
+     */
+    public Cliente retornarCliente(String cpf) {
+        for (Cliente cliente : clientes) {
+            if (cliente.cpf.equals(cpf)) {
+                return cliente;
+            }
+        }
         return null;
     }
 
     /**
-     * Este método é responsável por printar lista de clientes.
+     * Este método é responsável por exibir a lista de clientes registrados.
      */
     public void printarListaDeClientes(){
         System.out.println("------------------ Clientes --------------------");
@@ -111,7 +139,6 @@ public class RegistroDeClientes {
 
     /**
      * Singleton que só permite uma instância do objeto ser criada, quando o atributo estático instancia tem o valor nulo.
-     * @return
      */
     public static RegistroDeClientes getInstancia() {
         if (instancia == null) {

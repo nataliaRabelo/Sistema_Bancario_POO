@@ -2,6 +2,8 @@ package br.winxbank.sistemabancario;
 
 import br.winxbank.sistemaclientes.Cliente;
 
+import java.util.Scanner;
+
 /**
  * @author Natália
  * Esta classe é responsável por representar uma entidade abstrata Conta.
@@ -57,7 +59,10 @@ public abstract class Conta {
     /**
      * Método responsável por realizar uma transferência via pix a uma conta.
      */
-    public void fazerPix(Conta conta, double valor) {
+    public void fazerPix(Conta conta) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite o valor do pix:");
+        double valor = sc.nextDouble();
         this.saldo -= valor;
         conta.saldo += valor;
     }
@@ -68,33 +73,27 @@ public abstract class Conta {
      * @param valor
      */
     public void comprar(double valor) {
+        //TODO: fazer opções de crédito e débito
         this.saldo -= valor;
     }
 
     /**
-     * Método responsável por selecionar uma conta.
-     *
-     * @param cliente
-     * @param numeroConta
-     * @return
-     */
-    public Conta selecionarConta(Cliente cliente, int numeroConta) {
-        for (Conta conta : cliente.getContas()) {
-            if (conta.numeroConta == numeroConta) {
-                return conta;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Método responsável por sacar um valor da conta.
-     *
      * @param valor
      */
     public void sacar(double valor) {
         this.saldo -= valor;
         System.out.println("Você está sacando o valor de: " + valor);
+    }
+
+    /**
+     * Método responsável por depositar um valor na conta
+     */
+    public void depositar(){
+        System.out.println("Digite o valor que deseja depositar na sua conta:");
+        Scanner sc = new Scanner(System.in);
+        double valor = sc.nextDouble();
+        setSaldo(valor);
     }
 
 
@@ -115,8 +114,8 @@ public abstract class Conta {
     }
 
     public void setSaldo(double valor) {
-        if(valor <= this.saldo){
-            this.saldo -= saldo;
+        if(valor-this.saldo < 0){
+            this.saldo += saldo;
         }
     }
 }
