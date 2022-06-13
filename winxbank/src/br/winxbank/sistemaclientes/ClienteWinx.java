@@ -1,9 +1,6 @@
 package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.Conta;
-import br.winxbank.sistemaclientes.Cliente;
-
-import java.util.ArrayList;
 
 /**
  * @author Dani

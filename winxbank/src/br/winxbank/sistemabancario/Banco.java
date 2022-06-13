@@ -7,7 +7,6 @@ import br.winxbank.random.MathRandomNumContaWithSeed;
 import br.winxbank.sistemaclientes.Cliente;
 import br.winxbank.sistemaclientes.RegistroDeClientes;
 
-import java.nio.file.Path;
 import java.util.Scanner;
 
 /**

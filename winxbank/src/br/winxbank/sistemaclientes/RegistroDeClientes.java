@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class RegistroDeClientes {
 
     private static RegistroDeClientes instancia;
-    private ArrayList<Cliente> clientes = new ArrayList<>();
+    private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
     /**
      * Este método é responsável por cadastrar um cliente no registro de clientes.
