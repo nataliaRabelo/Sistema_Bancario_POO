@@ -5,7 +5,9 @@ import br.winxbank.sistemabancario.Conta;
 import br.winxbank.sistemabancario.ContaCorrente;
 import br.winxbank.sistemabancario.ContaPoupanca;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Scanner;
 
 /**
@@ -15,7 +17,7 @@ import java.util.Scanner;
 public class RegistroDeClientes {
 
     private static RegistroDeClientes instancia;
-    private ArrayList<Cliente> clientes = new ArrayList<>();
+    private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
     /**
      * Este método é responsável por cadastrar um cliente no registro de clientes.
@@ -46,15 +48,21 @@ public class RegistroDeClientes {
      * Este método é responsável por atualizar dados de um cliente do registro de clientes
      * @param cliente
      */
-    public void atualizarCliente(Cliente cliente){
+    public void atualizarCliente(Cliente cliente) throws InterruptedException {
         System.out.println("Seu usuario está sendo atualizado...");
         for(Cliente clienteDaLista : clientes){
             if(clienteDaLista.cpf.equals(cliente.cpf)){
-                clientes.remove(clienteDaLista);
-                clientes.add(cliente);
+                try{
+                    clientes.remove(clienteDaLista);
+                    clientes.add(cliente);
+                }catch (ConcurrentModificationException e){
+                    clientes.remove(clienteDaLista);
+                    Thread.sleep(2);
+                    clientes.add(cliente);
+                }
+
             }
         }
-
     }
 
     /**
@@ -71,34 +79,34 @@ public class RegistroDeClientes {
     }
 
     /**
+     * Este método é responsável por visualizar contas de um determinado cliente.
+     * @param cliente
+     */
+    public void visualizarContas(Cliente cliente){
+        for(Conta conta : cliente.getContas()){
+            if(conta.getClass() == ContaPoupanca.class){
+                System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + " no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format( conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " ]");
+            }
+            else if(conta.getClass() == ContaCorrente.class){
+                System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format(conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " | Cartao Credito no: " + ((ContaCorrente) conta).getCartaoCredito().getNumero() + "| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " ]");
+            }
+        }
+    }
+
+    /**
      * Este método é responsável por visualizar detalhes de um cliente do registro a partir do seu CPF.
      * @param cpf
      */
     public void visualizarDetalhesDoCliente(String cpf){
         for(Cliente cliente : clientes){
             if(cliente.getClass() == ClienteWinx.class && cliente.cpf.equals(cpf)){
-                System.out.println("Nome: " + cliente.getNome() + "CPF: " + cliente.getCpf() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra() + "\nContas:");
-                for(Conta conta : cliente.getContas()){
-                    if(conta.getClass() == ContaPoupanca.class){
-                        System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "]");
-                    }
-                    else if(conta.getClass() == ContaCorrente.class){
-                        System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "| Cartao Credito: " + ((ContaCorrente) conta).getCartaoCredito() + "]");
-                    }
-                }
+                System.out.println("Nome: " + cliente.getNome() + " | CPF: " + cliente.getCpf() + " | Pontos por compra: " + ((ClienteWinx) cliente).getPontosDeCompra() + "\nContas:");
+                visualizarContas(cliente);
             }
             else if(cliente.getClass() == Cliente.class && cliente.cpf.equals(cpf)){
                 System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "\nContas:");
-                for(Conta conta : cliente.getContas()){
-                    if(conta.getClass() == ContaPoupanca.class){
-                        System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "]");
-                    }
-                    else if(conta.getClass() == ContaCorrente.class){
-                        System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo:" + conta.getSaldo() + " | DividaEmprestimo:" + conta.getDividaDeEmprestimo() + "| Cartao Debito: " + conta.getCartao() + "| Cartao Credito: " + ((ContaCorrente) conta).getCartaoCredito() + "]");
-                    }
-                }
+                visualizarContas(cliente);
             }
-
         }
     }
 
@@ -107,9 +115,12 @@ public class RegistroDeClientes {
      * @param cpf
      * @return Cliente
      */
-    public Cliente retornarCliente(String cpf) {
+    public Cliente retornarCliente(String cpf){
         for (Cliente cliente : clientes) {
-            if (cliente.cpf.equals(cpf)) {
+            if(clientes.get(0) == null){
+                throw new NullPointerException("A lista esta nula, nao foi possivel buscar cliente");
+            }
+            else if (cliente.cpf.equals(cpf)) {
                 return cliente;
             }
         }
@@ -123,10 +134,12 @@ public class RegistroDeClientes {
         System.out.println("------------------ Clientes --------------------");
         for(Cliente cliente : clientes){
             if(cliente.getClass() == ClienteWinx.class){
-                System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "| Contas: " + cliente.getContas() + "Pontos por compra" + ((ClienteWinx) cliente).getPontosDeCompra());
+                System.out.println("Nome: " + cliente.getNome() + " | CPF: " + cliente.getCpf() + " | Pontos por compra: " + ((ClienteWinx) cliente).getPontosDeCompra() + "\nContas:");
+                visualizarContas(cliente);
             }
             else{
-                System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "| Contas: " + cliente.getContas());
+                System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "\nContas:");
+                visualizarContas(cliente);
             }
             System.out.println("------------------------------------------------");
 

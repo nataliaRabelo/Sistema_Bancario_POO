@@ -8,7 +8,7 @@ public interface OperacoesAutomaticas {
 
     double taxaJurus = 12.75;
     double taxaManutencaoConta = 13.00;
-    double rendimentoMensalPoupanca = 0.05;
+    double rendimentoMensalPoupanca = 0.8;
 
     void movimentacaoBancaria(double valor);
 

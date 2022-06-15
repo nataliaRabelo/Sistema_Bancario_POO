@@ -1,7 +1,5 @@
 package br.winxbank.sistemabancario;
 
-import br.winxbank.sistemaclientes.Cliente;
-
 import java.util.Scanner;
 
 /**

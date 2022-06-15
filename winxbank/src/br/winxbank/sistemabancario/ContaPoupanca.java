@@ -23,7 +23,7 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
      * Método responsável por acrescentar rendimento sobre o saldo contido nesta conta.
      */
     public void acrescentarRendimento(){
-        this.saldo *= taxaJurus;
+        this.saldo /= rendimentoMensalPoupanca;
         double rendimentoDesteCaso = this.saldo * rendimentoMensalPoupanca;
         movimentacaoBancaria(rendimentoDesteCaso);
 
