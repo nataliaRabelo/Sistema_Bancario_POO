@@ -1,10 +1,12 @@
 package br.winxbank.sistemaclientes;
 
+import br.winxbank.repository.ArquivoDeClientes;
 import br.winxbank.sistemabancario.Banco;
 import br.winxbank.sistemabancario.Conta;
 import br.winxbank.sistemabancario.ContaCorrente;
 import br.winxbank.sistemabancario.ContaPoupanca;
 
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -32,16 +34,15 @@ public class RegistroDeClientes {
         Cliente cliente = new Cliente(nome, cpf);
         Conta conta = Banco.getInstancia().abrirNovaConta();
         cliente.setContas(conta);
-        if(cliente.acessarContas().getSaldo() >= 100000){
+        if(conta.getSaldo() >= 100000){
             System.out.println("Parabéns, você tem direito a ser ClienteWinx!");
             ClienteWinx clienteWinx = new ClienteWinx(nome, cpf, 0);
             clienteWinx.setContas(conta);
             clientes.add(clienteWinx);
         }
-        else if(cliente.acessarContas().getSaldo() < 100000) {
+        else if(conta.getSaldo() < 100000) {
             clientes.add(cliente);
         }
-
     }
 
     /**
@@ -85,10 +86,10 @@ public class RegistroDeClientes {
     public void visualizarContas(Cliente cliente){
         for(Conta conta : cliente.getContas()){
             if(conta.getClass() == ContaPoupanca.class){
-                System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + " no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format( conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " ]");
+                System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + " no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format( conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ conta.getCartao().getCsv() + " ]");
             }
             else if(conta.getClass() == ContaCorrente.class){
-                System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format(conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " | Cartao Credito no: " + ((ContaCorrente) conta).getCartaoCredito().getNumero() + "| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " ]");
+                System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format(conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ conta.getCartao().getCsv() + " | Cartao Credito no: " + ((ContaCorrente) conta).getCartaoCredito().getNumero() + "| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " ]");
             }
         }
     }
@@ -144,6 +145,14 @@ public class RegistroDeClientes {
             System.out.println("------------------------------------------------");
 
         }
+    }
+
+    /**
+     * Método responsável por adicionar uma coleção inteira ao atributo do tipo ArrayList de clientes da classe para carregar dados registrados em um arquivo de outras vezes que o programa foi executado.
+     * @param clientes
+     */
+    public void setClientes(ArrayList<Cliente> clientes) {
+        this.clientes.addAll(clientes);
     }
 
     public ArrayList<Cliente> getClientes() {

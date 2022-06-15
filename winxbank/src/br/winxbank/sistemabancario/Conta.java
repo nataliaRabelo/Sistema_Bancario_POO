@@ -1,5 +1,6 @@
 package br.winxbank.sistemabancario;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
@@ -12,6 +13,7 @@ public abstract class Conta {
     protected double saldo;
     protected Cartao cartao;
     protected double dividaDeEmprestimo;
+    private static final long serialVersionUID = 3L;
     //TODO: Informe de rendimento.
 
     /**
@@ -26,6 +28,10 @@ public abstract class Conta {
         this.saldo = saldo;
         this.cartao = cartao;
         this.dividaDeEmprestimo = dividaDeEmprestimo;
+    }
+
+    public Conta(){
+
     }
 
     /**

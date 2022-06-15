@@ -2,11 +2,13 @@ package br.winxbank.sistemabancario;
 
 import br.winxbank.tempo.Ano;
 
+import java.io.Serializable;
+
 /**
  * @author Carol
  * Esta classe é responsável por representar uma entidade CartaoCredito.
  */
-public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
+public class CartaoCredito extends Cartao implements OperacoesAutomaticas, Serializable {
 
     private double fatura;
     private String mesDaFatura;
@@ -14,6 +16,7 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
     private boolean faturaPaga;
     private double limite;
     private Conta conta;
+    private static final long serialVersionUID = 2L;
 
     /**
      * Construtor padrão do cartão de crédito

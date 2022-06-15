@@ -1,14 +1,17 @@
 package br.winxbank.sistemabancario;
 
+import java.io.Serializable;
+
 /**
  * @author Carol
  * Esta classe é responsável por representar uma entidade Cartao.
  */
-public class Cartao {
+public class Cartao implements Serializable {
 
     protected int numero;
     protected int csv;
     protected Conta conta;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Construtor padrão do cartão

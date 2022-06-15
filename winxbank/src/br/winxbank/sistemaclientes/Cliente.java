@@ -2,13 +2,14 @@ package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.Conta;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Dani
  * Esta classe é responsável por representar uma entidade Cliente.
  */
-public class Cliente {
+public class Cliente implements Serializable {
     protected String nome;
     protected String cpf;
     protected ArrayList<Conta> contas = new ArrayList<>();

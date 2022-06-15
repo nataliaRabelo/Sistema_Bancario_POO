@@ -2,12 +2,14 @@ package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.Conta;
 
+import java.io.Serializable;
+
 /**
  * @author Dani
  * Esta classe é responsável por representar uma entidade ClienteWinx.
  * Um tipo de cliente sem vantagens no banco.
  */
-public class ClienteWinx extends Cliente {
+public class ClienteWinx extends Cliente implements Serializable {
 
     private int pontosDeCompra;
     private final int BONUSDECOMPRA = 3;
