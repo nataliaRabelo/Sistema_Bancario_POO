@@ -15,18 +15,15 @@ public class MathRandomNumContaWithSeed {
      */
     public static int generateRandom(){
 
-        int min = 1000;
-        int max = 9999;
+        int min = 10000;
+        int max = 99999;
         int seed = 5;
 
         int random = randomNext(min, max, seed);
-        if(numeros.contains(random)){
-            return generateRandom();
+        while (numeros.contains(random)){
+            random = randomNext(min, max, seed);
         }
-        else{
-            numeros.add(random);
-            return random;
-        }
+        return random;
     }
 
     /**

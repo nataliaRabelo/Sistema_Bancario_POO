@@ -1,5 +1,7 @@
 package br.winxbank.tempo;
 
+import br.winxbank.sistemabancario.Banco;
+
 /**
  * @author Dani
  * Esta classe é responsável por representar e controlar o passar dos meses de um ano.
@@ -32,6 +34,7 @@ public class Ano {
             else{
                 this.indexMesAtual++;
             }
+            Banco.getInstancia().movimentarEntreBancoConta();
         }
         if(count == Long.MAX_VALUE){
             count = 0;

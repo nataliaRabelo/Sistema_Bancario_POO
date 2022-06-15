@@ -27,4 +27,12 @@ public class Cartao {
     public void setConta(Conta conta) {
         this.conta = conta;
     }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public int getCsv() {
+        return csv;
+    }
 }

@@ -39,7 +39,7 @@ public class Banco {
         System.out.println("Qual tipo de conta conta deseja abrir? Digite 1 (Corrente) ou 2 (Poupanca)");
         decisao = sc.nextInt();
         if(decisao == 1){
-            System.out.println("Você está criando uma conta corrente...");
+            System.out.println("Voce esta criando uma conta corrente...");
             int numeroCartao = MathRandomNumCartaoWithSeed.generateRandom();
             int csv = MathRandomCsvWithSeed.generateRandom();
             Cartao cartao = new Cartao(numeroCartao, csv);
@@ -54,7 +54,7 @@ public class Banco {
             return contaCorrente;
         }
         else if(decisao == 2){
-            System.out.println("Você está criando uma conta poupanca...");
+            System.out.println("Voce esta criando uma conta poupanca...");
             int numeroCartao = MathRandomNumCartaoWithSeed.generateRandom();
             int csv = MathRandomCsvWithSeed.generateRandom();
             Cartao cartao = new Cartao(numeroCartao, csv);
