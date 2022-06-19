@@ -37,6 +37,7 @@ public class ArquivoDeClientes {
             json = JsonParser.parseReader(reader);
             System.out.println(json);
             JSONArray array = new JSONArray(json.toString());
+            // JSONArray[1] not found.
             for(int i=0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
@@ -45,7 +46,7 @@ public class ArquivoDeClientes {
                 JSONArray array2;
                 System.out.println("Array de contas do cliente atual: " + object.getJSONArray("contas")); //print debug
                 array2 = object.getJSONArray("contas");
-                for(int j = 0; j < array2.length(); i++){
+                for(int j = i; j < array2.length(); j++){
                     JSONObject object2 = array2.getJSONObject(i);
                     System.out.println(object2); //print debug
                     System.out.println(object2.getString("numeroConta")); //print debug
@@ -60,16 +61,15 @@ public class ArquivoDeClientes {
                     array3 = object2.getJSONArray("extrato");
                     Conta contaAtual;
                     System.out.println(cartaoCreditoJson != null);
-                    //PROBLEMA ROLANDO NESSES IFS
                     if(cartaoCreditoJson != null){
-                        contaAtual = new ContaCorrente(object2.getInt("numeroConta"), object2.getDouble("saldo"), new Cartao(cartaoDebitoJson.getInt("numero"), cartaoDebitoJson.getInt("csv")), object2.getDouble("dividaEmprestimo"), new CartaoCredito(cartaoCreditoJson.getDouble("fatura"), cartaoCreditoJson.getInt("indexMesDaFatura"), cartaoCreditoJson.getBoolean("faturaPaga"), cartaoCreditoJson.getDouble("limite"), cartaoCreditoJson.getInt("numero"), cartaoCreditoJson.getInt("csv")));
-                        System.out.println("Conta corrente foi criada");
+                        contaAtual = new ContaCorrente(object2.getInt("numeroConta"), object2.getDouble("saldo"), new Cartao(cartaoDebitoJson.getInt("numero"), cartaoDebitoJson.getInt("csv")), object2.getDouble("dividaDeEmprestimo"), new CartaoCredito(cartaoCreditoJson.getDouble("fatura"), cartaoCreditoJson.getInt("indexMesDaFatura"), cartaoCreditoJson.getBoolean("faturaPaga"), cartaoCreditoJson.getDouble("limite"), cartaoCreditoJson.getInt("numero"), cartaoCreditoJson.getInt("csv")));
+                        System.out.println("Conta corrente foi criada"); //print debug
                     }else{
-                        contaAtual = new ContaPoupanca(object2.getInt("numeroConta"), object2.getDouble("saldo"), new Cartao(cartaoDebitoJson.getInt("numero"), cartaoDebitoJson.getInt("csv")), object2.getDouble("dividaEmprestimo"));
-                        System.out.println("Conta poupanca foi criada");
+                        contaAtual = new ContaPoupanca(object2.getInt("numeroConta"), object2.getDouble("saldo"), new Cartao(cartaoDebitoJson.getInt("numero"), cartaoDebitoJson.getInt("csv")), object2.getDouble("dividaDeEmprestimo"));
+                        System.out.println("Conta poupanca foi criada"); //print debug
                     }
                     cliente.setContas(contaAtual);
-                    for(int x = 0; x < array3.length(); x++){
+                    for(int x = j; x < array3.length(); x++){
                         JSONObject object3 = array3.getJSONObject(i);
                         System.out.println(object3.getString("mesAtual"));
                         Movimentacao movimentacao = new Movimentacao(object3.getString("mesAtual"), object3.getDouble("dinheiroMovimentado"), object3.getString("tipoDaMovimentacao"));
@@ -85,8 +85,8 @@ public class ArquivoDeClientes {
             }
             RegistroDeClientes.getInstancia().setClientes(clientes);
 
-        } catch (Exception e) {
-            // do something
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 
