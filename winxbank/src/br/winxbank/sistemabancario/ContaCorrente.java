@@ -1,6 +1,7 @@
 package br.winxbank.sistemabancario;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * @author Dani
@@ -9,7 +10,6 @@ import java.io.Serializable;
 public class ContaCorrente extends Conta implements OperacoesAutomaticas, Serializable {
 
     private CartaoCredito cartaoCredito;
-    private final String tipoDaConta = "Corrente";
     private static final long serialVersionUID = 4L;
 
     /**
@@ -24,9 +24,12 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas, Serial
         this.cartaoCredito = cartaoCredito;
     }
 
-    public ContaCorrente(){
 
+    public ContaCorrente(String numeroConta, String saldo, CartaoCredito cartaoCredito, Cartao cartao, String dividaDeEmprestimo, ArrayList<Movimentacao> movimentacoes) {
+        super(Integer.parseInt(numeroConta), Double.parseDouble(saldo), cartao, Double.parseDouble(dividaDeEmprestimo), movimentacoes);
+        this.cartaoCredito = cartaoCredito;
     }
+
 
     /**
      * Método responsável por pagar fatura com o saldo da conta.
@@ -57,6 +60,7 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas, Serial
     }
 
     public String getTipoDaConta() {
+        String tipoDaConta = "Corrente";
         return tipoDaConta;
     }
 }

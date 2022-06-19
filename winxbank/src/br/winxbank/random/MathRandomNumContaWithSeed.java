@@ -41,4 +41,8 @@ public class MathRandomNumContaWithSeed {
 
         return random;
     }
+
+    public static void setNumeros(HashSet<Integer> numeros) {
+        MathRandomCsvWithSeed.numeros.addAll(numeros);
+    }
 }

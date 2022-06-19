@@ -6,6 +6,7 @@ import br.winxbank.random.MathRandomNumCartaoWithSeed;
 import br.winxbank.random.MathRandomNumContaWithSeed;
 import br.winxbank.sistemaclientes.Cliente;
 import br.winxbank.sistemaclientes.RegistroDeClientes;
+import br.winxbank.tempo.Ano;
 
 import java.util.Scanner;
 
@@ -47,9 +48,7 @@ public class Banco {
             int numeroConta = MathRandomNumContaWithSeed.generateRandom();
             System.out.println("Digite o saldo que deseja colocar na sua conta ");
             double saldo = sc.nextDouble();
-            ContaCorrente contaCorrente = new ContaCorrente(numeroConta, saldo, cartao, 0, cartaoCredito);
-            cartao.setConta(contaCorrente);
-            cartaoCredito.setConta(contaCorrente);
+            Conta contaCorrente = new ContaCorrente(numeroConta, saldo, cartao, 0, cartaoCredito);
             System.out.println("Sua conta corrente foi criada com sucesso!");
             return contaCorrente;
         }
@@ -62,7 +61,6 @@ public class Banco {
             System.out.println("Digite o saldo que deseja colocar na sua conta:");
             double saldo = sc.nextDouble();
             ContaPoupanca contaPoupanca = new ContaPoupanca(numeroConta, saldo, cartao, 0);
-            cartao.setConta(contaPoupanca);
             System.out.println("Sua conta poupanca foi criada com sucesso!");
             return contaPoupanca;
         }

@@ -13,6 +13,7 @@ public class ClienteWinx extends Cliente implements Serializable {
 
     private int pontosDeCompra;
     private final int BONUSDECOMPRA = 3;
+    private static final long serialVersionUID = 7L;
 
     /**
      * Construtor padrão do cliente.

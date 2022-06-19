@@ -1,5 +1,7 @@
 package br.winxbank.random;
 
+import br.winxbank.repository.ArquivoCsv;
+
 import java.util.HashSet;
 
 /**
@@ -40,5 +42,9 @@ public class MathRandomCsvWithSeed {
         int random = ((int)(count * Math.random()) * seed) + min;
 
         return random;
+    }
+
+    public static void setNumeros(HashSet<Integer> numeros) {
+        MathRandomCsvWithSeed.numeros.addAll(numeros);
     }
 }

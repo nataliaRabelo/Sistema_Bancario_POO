@@ -1,6 +1,7 @@
 package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.Conta;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,9 +11,13 @@ import java.util.ArrayList;
  * Esta classe é responsável por representar uma entidade Cliente.
  */
 public class Cliente implements Serializable {
+    @SerializedName("nome")
     protected String nome;
+    @SerializedName("cpf")
     protected String cpf;
+    @SerializedName("contas")
     protected ArrayList<Conta> contas = new ArrayList<>();
+    private static final long serialVersionUID = 4550979629324913441L;
 
     /**
      * Construtor padrão do cliente.
@@ -38,6 +43,18 @@ public class Cliente implements Serializable {
      */
     public Cliente(){
 
+    }
+
+    /**
+     * Construtor alternativo para leitura de arquivo json.
+     * @param nome
+     * @param cpf
+     * @param contas
+     */
+    public Cliente(String nome, String cpf, Object contas) {
+        this.nome = nome;
+        this.cpf = cpf;
+        setContas((Conta) contas);
     }
 
     public void apagarConta(Conta conta) {
@@ -78,5 +95,9 @@ public class Cliente implements Serializable {
 
     public void setContas(Conta conta) {
         this.contas.add(conta);
+    }
+
+    public void setContas(ArrayList<Conta> contas) {
+        this.contas.addAll(contas);
     }
 }

@@ -1,6 +1,10 @@
 package br.winxbank.sistemabancario;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -9,12 +13,16 @@ import java.util.Scanner;
  */
 public abstract class Conta {
 
+    @SerializedName("numeroConta")
     protected int numeroConta;
+    @SerializedName("saldo")
     protected double saldo;
+    @SerializedName("cartao")
     protected Cartao cartao;
+    @SerializedName("dividaDeEmprestimo")
     protected double dividaDeEmprestimo;
-    private static final long serialVersionUID = 3L;
-    //TODO: Informe de rendimento.
+    @SerializedName("extrato")
+    ArrayList<Movimentacao> extrato = new ArrayList<>();
 
     /**
      * Construtor padrão da classe conta.
@@ -30,9 +38,22 @@ public abstract class Conta {
         this.dividaDeEmprestimo = dividaDeEmprestimo;
     }
 
-    public Conta(){
-
+    /**
+     * Construtor alternativo para leitura de arquivo json.
+     * @param numeroConta
+     * @param saldo
+     * @param cartao
+     * @param dividaDeEmprestimo
+     * @param movimentacoes
+     */
+    public Conta(int numeroConta, double saldo, Cartao cartao, double dividaDeEmprestimo, ArrayList<Movimentacao> movimentacoes) {
+        this.numeroConta = numeroConta;
+        this.saldo = saldo;
+        this.cartao = cartao;
+        this.dividaDeEmprestimo = dividaDeEmprestimo;
+        this.extrato.addAll(movimentacoes);
     }
+
 
     /**
      * Método responsável por substrair o valor da dívida de empréstimo.
@@ -117,9 +138,23 @@ public abstract class Conta {
         return cartao;
     }
 
+    public ArrayList<Movimentacao> getExtrato() {
+        return extrato;
+    }
+
     public void setSaldo(double valor) {
         if(valor-this.saldo < 0){
             this.saldo += saldo;
         }
     }
+
+    public void setExtrato(Movimentacao movimentacao){
+        this.extrato.add(movimentacao);
+    }
+
+    @Override
+    public String toString() {
+        return "Conta [numeroConta=" + numeroConta + ", cartao=" + cartao + "]";
+    }
+
 }

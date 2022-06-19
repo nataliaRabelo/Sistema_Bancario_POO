@@ -15,7 +15,6 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas, Seria
     private int indexMesDaFatura;
     private boolean faturaPaga;
     private double limite;
-    private Conta conta;
     private static final long serialVersionUID = 2L;
 
     /**
@@ -26,6 +25,26 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas, Seria
     public CartaoCredito(int numero, int csv) {
         super(numero, csv);
     }
+
+
+    /**
+     * Construtor alternativo para leitura de json.
+     * @param fatura
+     * @param indexMesDaFatura
+     * @param faturaPaga
+     * @param limite
+     * @param numero
+     * @param csv
+     */
+    public CartaoCredito(double fatura, int indexMesDaFatura, boolean faturaPaga, double limite, int numero, int csv) {
+        super(numero, csv);
+        this.fatura = fatura;
+        this.indexMesDaFatura = indexMesDaFatura;
+        this.faturaPaga = faturaPaga;
+        this.limite = limite;
+
+    }
+
 
     /**
      * Método responsável por creditar um valor da fatura do cartão de crédito.
@@ -65,9 +84,6 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas, Seria
 
     }
 
-    public void setConta(Conta conta) {
-        this.conta = conta;
-    }
 
     public double getFatura() {
         return fatura;
@@ -83,6 +99,18 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas, Seria
             movimentacaoBancaria(this.fatura - faturaAnterior);
         }
 
+    }
+
+    public int getIndexMesDaFatura() {
+        return indexMesDaFatura;
+    }
+
+    public boolean isFaturaPaga() {
+        return faturaPaga;
+    }
+
+    public double getLimite() {
+        return limite;
     }
 
     /**

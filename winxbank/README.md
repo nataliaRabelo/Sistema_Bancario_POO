@@ -14,13 +14,31 @@ Versão atual: 0.1 (manter o pom.xml sempre atualizado)
 
 # 2. Pré-requisitos
 
-* Desenvolvimento no Windows 10 e 11.
+* Desenvolvimento no Windows 10.
 * IDE de livre escolha. Recomendação:[IntelliJ Community na última versão](https://www.jetbrains.com/idea/download/#section=windows) 
 * [Java 17.0.1](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 * [Maven 3.8.5](https://maven.apache.org/download.cgi)
 * JUnit 5 (obtido diretamente da IDE)
 
-# 3. Estrutura desse repositório
+# 3. Instruções para execução
+
+## 3.1. Compilando como JAR para distribuição
+
+A compilação do pacote pode ser feita através da IDE ou com o comando:
+
+```
+mvn install
+```
+
+## 3.2. Construindo e Executando diretamente
+
+Você pode executar em modo produção ou debug diretamente através da IDE. Você também pode compilar e executar através do terminal:
+
+```
+mvn clean compile exec:java
+```
+
+# 4. Estrutura desse repositório
 
 **EM Construção**
 
@@ -32,7 +50,7 @@ src/main/ - Fonte principal da aplicação
 src/test/ - Fonte do teste de unidade e do teste de estresse
 tools - Scripts para execução automática do teste de estresse, geração de javadoc, inicialização, entre outras ferramentar internas desenvolvidas para este projeto
 
-# 4. Estrutura deste Repositório
+# 5. Estrutura deste Repositório
 
 **EM Construção**
 
@@ -42,9 +60,8 @@ Este repositório está estruturado da seguinte forma:
 * src - Código fonte da aplicação de integração
   * src/main/ - Fonte principal da aplicação
   * src/test/ - Fonte do teste de unidade e do teste de estresse
-* tools - Scripts para execução automática do teste de estresse, geração de javadoc, inicialização, entre outras ferramentar internas desenvolvidas para este projeto.
 
-# 5. Teste unitário do Projeto
+# 6. Teste unitário do Projeto
 
 **EM Construção**
 
@@ -57,7 +74,6 @@ Todos os testes unitários estão documentados e seguem os seguintes princípios
 * São independentes entre si.
 * São determinísticos.
 * Introduzem pouco overhead de tempo de execução e uso de memória comparado ao código fonte testado.
-* Utilizam por padrão o log do sistema apontado para o arquivo `JUnit.log`. **TODO**
 * Uma classe do teste unitário deve testar um conjunto de classes do código fonte com responsabilidades similares.
 * As unidade são métodos de alguma classe testada. Cada método deve ser testado como caixa preta.
 * Os fluxos de exceções também devem ser considerados nos testes.

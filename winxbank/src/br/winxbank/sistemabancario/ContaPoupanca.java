@@ -1,6 +1,7 @@
 package br.winxbank.sistemabancario;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * @author Dani.
@@ -9,8 +10,8 @@ import java.io.Serializable;
 public class ContaPoupanca extends Conta implements OperacoesAutomaticas, Serializable {
 
 
-    private final String tipoDaConta = "Poupanca";
     private static final long serialVersionUID = 5L;
+    ArrayList<String> informeRendimento;
     /**
      * Construtor padrão da classe conta.
      *
@@ -22,9 +23,10 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas, Serial
         super(numeroConta, saldo, cartao, dividaDeEmprestimo);
     }
 
-    public ContaPoupanca(){
-
+    public ContaPoupanca(String numeroConta, String saldo, Cartao cartao, String dividaDeEmprestimo, ArrayList<Movimentacao> movimentacoes) {
+        super(Integer.parseInt(numeroConta), Double.parseDouble(saldo), cartao, Double.parseDouble(dividaDeEmprestimo), movimentacoes);
     }
+
 
     /**
      * Método responsável por acrescentar rendimento sobre o saldo contido nesta conta.
@@ -37,6 +39,7 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas, Serial
     }
 
     public String getTipoDaConta() {
+        String tipoDaConta = "Poupanca";
         return tipoDaConta;
     }
 

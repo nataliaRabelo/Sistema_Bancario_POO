@@ -1,6 +1,7 @@
 package br.winxbank.sistemabancario;
 
 import br.winxbank.tempo.Ano;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -10,16 +11,27 @@ import java.io.Serializable;
  */
 public class Movimentacao implements Serializable {
 
+    @SerializedName("mesAtual")
     private String mesAtual;
-    private String nomeDoCliente;
-    private String cpf;
-    private int numeroConta;
-    private int numeroCartao;
+    @SerializedName("dinheiroMovimentado")
     private double dinheiroMovimentado;
-    private double rendimento;
-    private double desconto;
+    @SerializedName("tipoDaMovimentacao")
     private TipoDaMovimentacao tipoDaMovimentacao;
-    private enum TipoDaMovimentacao{
+
+    /**
+     * Construtor para leitura de json
+     * @param mesAtual
+     * @param dinheiroMovimentado
+     * @param tipoDaMovimentacao
+     */
+    public Movimentacao(String mesAtual, double dinheiroMovimentado, String tipoDaMovimentacao) {
+        this.mesAtual = mesAtual;
+        this.dinheiroMovimentado = dinheiroMovimentado;
+        this.tipoDaMovimentacao = TipoDaMovimentacao.valueOf(tipoDaMovimentacao);
+    }
+
+
+    public enum TipoDaMovimentacao{
         ENTRADA,
         SAIDA;
     }
@@ -33,58 +45,27 @@ public class Movimentacao implements Serializable {
 
     /**
      * Construtor padrão da classe Movimentacao
-     *
-     * @param nomeDoCliente
-     * @param cpf
-     * @param numeroConta
-     * @param numeroCartao
      * @param dinheiroMovimentado
-     * @param rendimento
-     * @param desconto
      * @param tipoDaMovimentacao
      */
-    public Movimentacao(String mesAtual, String nomeDoCliente, String cpf, int numeroConta, int numeroCartao, double dinheiroMovimentado, double rendimento, double desconto, TipoDaMovimentacao tipoDaMovimentacao){
+    public Movimentacao(double dinheiroMovimentado, TipoDaMovimentacao tipoDaMovimentacao){
         this.mesAtual = Ano.getInstancia().getMesAtual();
-        this.nomeDoCliente = nomeDoCliente;
-        this.cpf = cpf;
-        this.numeroConta = numeroConta;
-        this.numeroCartao = numeroCartao;
         this.dinheiroMovimentado = dinheiroMovimentado;
-        this.rendimento = rendimento;
-        this.desconto = desconto;
         this.tipoDaMovimentacao = tipoDaMovimentacao;
 
     }
-    public String getNomeDoCliente() {
-        return nomeDoCliente;
-    }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public int getNumeroConta() {
-        return numeroConta;
-    }
-
-    public int getNumeroCartao() {
-        return numeroCartao;
-    }
 
     public double getDinheiroMovimentado() {
         return dinheiroMovimentado;
     }
 
-    public double getRendimento() {
-        return rendimento;
-    }
-
-    public double getDesconto() {
-        return desconto;
-    }
 
     public TipoDaMovimentacao getTipoDaMovimentacao() {
         return tipoDaMovimentacao;
     }
 
+    public String getMesAtual() {
+        return mesAtual;
+    }
 }

@@ -4,12 +4,14 @@ import br.winxbank.repository.ArquivoDeClientes;
 import br.winxbank.sistemabancario.Banco;
 import br.winxbank.sistemabancario.Conta;
 import br.winxbank.sistemabancario.ContaCorrente;
+import br.winxbank.sistemabancario.Movimentacao;
 import br.winxbank.sistemaclientes.Cliente;
 import br.winxbank.sistemaclientes.ClienteWinx;
 import br.winxbank.sistemaclientes.RegistroDeClientes;
 import br.winxbank.tempo.Ano;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,14 +27,10 @@ public class Main {
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
         int decisao = 1;
         Cliente clienteAtual = new Cliente();
-        try {
-            Path path = Paths.get("clientes.txt");
-            if(Files.size(path) != 0){
-                ArquivoDeClientes.getInstancia().construirArrayDeOndeParou();
-                RegistroDeClientes.getInstancia().printarListaDeClientes();
-            }
+        //RegistroDeClientes.getInstancia().printarListaDeClientes();
             while (decisao == 1 || decisao == 2 || decisao == 3 || decisao == 4 || decisao == 5 || decisao == 6 || decisao == 7 || decisao == 8 || decisao == 9 || decisao == 10 || decisao == 11 || decisao == 12 || decisao == 13 || decisao == 14 || decisao == 15 || decisao == 16 || decisao == 17){
                 Scanner sc = new Scanner(System.in);
+                ArquivoDeClientes.getInstancia().readjason();
                 if(clienteAtual.getNome() != null){
                     System.out.println("------------------------------------------------");
                     System.out.println("Cliente atual: ");
@@ -71,24 +69,29 @@ public class Main {
                                     clienteAtual.setContas(cliente.acessarContas());
                                 }
                             }catch (NullPointerException e){
-                                System.out.println("Cliente inexistente ou registro de clientes nulo.");
+                                System.out.println("Cliente inexistente.");
                             }
 
                             break;
                         // --------------------- MENU --------------------- OBS: Depois de haver usuario logado
                         case 3: // ABRIR CONTA
                             Conta conta = Banco.getInstancia().abrirNovaConta();
+                            Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
+                            conta.setExtrato(movimentacao);
                             clienteAtual.setContas(conta);
-                            if(conta.getSaldo() >= 100000 || clienteAtual.acessarContas().getSaldo() >= 100000){
-                                System.out.println("Parabens, voce tem direito a ser ClienteWinx!");
-                                ClienteWinx clienteWinx = new ClienteWinx(clienteAtual.getNome(), clienteAtual.getCpf(), 0);
-                                clienteWinx.setContas(clienteAtual.acessarContas());
-                                clienteWinx.setContas(conta);
-                                RegistroDeClientes.getInstancia().atualizarCliente(clienteWinx);
-                                clienteAtual = clienteWinx;
-                            }
-                            else{
-                                RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
+                            try {
+                                if(conta.getSaldo() >= 100000 || clienteAtual.acessarContas().getSaldo() >= 100000){
+                                    System.out.println("Parabens, voce tem direito a ser ClienteWinx!");
+                                    ClienteWinx clienteWinx = new ClienteWinx(clienteAtual.getNome(), clienteAtual.getCpf(), 0);
+                                    clienteWinx.setContas(clienteAtual.getContas());
+                                    RegistroDeClientes.getInstancia().atualizarCliente(clienteWinx);
+                                    clienteAtual = clienteWinx;
+                                }
+                                else{
+                                    RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
+                                }
+                            }catch (NullPointerException e){
+                                System.out.println("Opcao invalida. Digite outro valor.");
                             }
                             break;
                         case 4: // FECHAR CONTA
@@ -132,7 +135,7 @@ public class Main {
                                 conta3.fazerPix(conta4);
                                 RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
                             }catch (NullPointerException e){
-                                System.out.println("Cliente inexistente ou registro de clientes nulo");
+                                System.out.println("Cliente inexistente.");
                             }
 
                             break;
@@ -204,16 +207,8 @@ public class Main {
                 }catch (InputMismatchException e){
                     System.out.println("Opcao invalida. Digite um novo valor.");
                 }
-                ArquivoDeClientes.getInstancia().atualizarArquivo(RegistroDeClientes.getInstancia().getClientes());
-        }
+                //ArquivoDeClientes.getInstancia().escreverJson(RegistroDeClientes.getInstancia().getClientes());
+            }
 
-        }catch (EOFException e){
-            e.getCause();
-        }
-        catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

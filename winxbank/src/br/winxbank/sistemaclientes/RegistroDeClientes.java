@@ -1,16 +1,15 @@
 package br.winxbank.sistemaclientes;
 
 import br.winxbank.repository.ArquivoDeClientes;
-import br.winxbank.sistemabancario.Banco;
-import br.winxbank.sistemabancario.Conta;
-import br.winxbank.sistemabancario.ContaCorrente;
-import br.winxbank.sistemabancario.ContaPoupanca;
+import br.winxbank.sistemabancario.*;
+import br.winxbank.tempo.Ano;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * @author Natália
@@ -37,12 +36,17 @@ public class RegistroDeClientes {
         if(conta.getSaldo() >= 100000){
             System.out.println("Parabéns, você tem direito a ser ClienteWinx!");
             ClienteWinx clienteWinx = new ClienteWinx(nome, cpf, 0);
+            Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
+            conta.setExtrato(movimentacao);
             clienteWinx.setContas(conta);
             clientes.add(clienteWinx);
         }
         else if(conta.getSaldo() < 100000) {
+            Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
+            conta.setExtrato(movimentacao);
             clientes.add(cliente);
         }
+
     }
 
     /**
@@ -51,19 +55,12 @@ public class RegistroDeClientes {
      */
     public void atualizarCliente(Cliente cliente) throws InterruptedException {
         System.out.println("Seu usuario está sendo atualizado...");
-        for(Cliente clienteDaLista : clientes){
-            if(clienteDaLista.cpf.equals(cliente.cpf)){
-                try{
-                    clientes.remove(clienteDaLista);
-                    clientes.add(cliente);
-                }catch (ConcurrentModificationException e){
-                    clientes.remove(clienteDaLista);
-                    Thread.sleep(2);
-                    clientes.add(cliente);
-                }
-
+        for(int i = 0; i < clientes.size(); i++){
+            if(clientes.get(i).cpf.equals(cliente.cpf)){
+                    clientes.remove(clientes.get(i));
             }
         }
+        clientes.add(cliente);
     }
 
     /**
@@ -88,7 +85,7 @@ public class RegistroDeClientes {
             if(conta.getClass() == ContaPoupanca.class){
                 System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + " no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format( conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ conta.getCartao().getCsv() + " ]");
             }
-            else if(conta.getClass() == ContaCorrente.class){
+            else{
                 System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format(conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ conta.getCartao().getCsv() + " | Cartao Credito no: " + ((ContaCorrente) conta).getCartaoCredito().getNumero() + "| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " ]");
             }
         }
@@ -136,12 +133,12 @@ public class RegistroDeClientes {
         for(Cliente cliente : clientes){
             if(cliente.getClass() == ClienteWinx.class){
                 System.out.println("Nome: " + cliente.getNome() + " | CPF: " + cliente.getCpf() + " | Pontos por compra: " + ((ClienteWinx) cliente).getPontosDeCompra() + "\nContas:");
-                visualizarContas(cliente);
             }
-            else{
+            else if(cliente.getClass() == Cliente.class){
                 System.out.println("Nome: " + cliente.getNome() + "| CPF: " + cliente.getCpf() + "\nContas:");
-                visualizarContas(cliente);
+
             }
+            visualizarContas(cliente);
             System.out.println("------------------------------------------------");
 
         }
@@ -153,6 +150,10 @@ public class RegistroDeClientes {
      */
     public void setClientes(ArrayList<Cliente> clientes) {
         this.clientes.addAll(clientes);
+    }
+
+    public void setClientes(Cliente cliente) {
+        this.clientes.add(cliente);
     }
 
     public ArrayList<Cliente> getClientes() {
