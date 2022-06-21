@@ -2,26 +2,15 @@ package br.winxbank.repository;
 
 import br.winxbank.sistemabancario.*;
 import br.winxbank.sistemaclientes.Cliente;
+import br.winxbank.sistemaclientes.RegistroDeClientes;
 
 import java.io.*;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
-import br.winxbank.sistemaclientes.RegistroDeClientes;
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import kong.unirest.JsonNode;
-import kong.unirest.ObjectMapper;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONException;
 import kong.unirest.json.JSONObject;
-import org.json.simple.parser.*;
 
 /**
  * @author Natália
@@ -36,46 +25,45 @@ public class ArquivoDeClientes {
         ArrayList<Cliente> clientes  = new ArrayList<>();
         try (Reader reader = new InputStreamReader(new FileInputStream("clientes.json"), "UTF-8")) {
             json = JsonParser.parseReader(reader);
-            System.out.println(json);
+            //System.out.println(json);
             JSONArray array = new JSONArray(json.toString());
-            // JSONArray[1] not found.
             for(int i=0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
                 Cliente cliente = new Cliente(object.getString("nome"), object.getString("cpf"));
-                System.out.println("Cliente criado: "+ cliente.getNome() + cliente.getCpf()); //print debug
+                //System.out.println("Cliente criado: "+ cliente.getNome() + cliente.getCpf()); //print debug
                 JSONArray array2;
-                System.out.println("Array de contas do cliente atual: " + object.getJSONArray("contas")); //print debug
+                //System.out.println("Array de contas do cliente atual: " + object.getJSONArray("contas")); //print debug
                 array2 = object.getJSONArray("contas");
                 for(int j = 0; j < array2.length(); j++){
                     JSONObject object2 = array2.getJSONObject(j);
-                    System.out.println(object2); //print debug
-                    System.out.println(object2.getString("numeroConta")); //print debug
+                    //System.out.println(object2); //print debug
+                    //System.out.println(object2.getString("numeroConta")); //print debug
                     JSONArray array3;
-                    System.out.println("Extrato da conta: " + object2.getJSONArray("extrato")); //print debug
+                    //System.out.println("Extrato da conta: " + object2.getJSONArray("extrato")); //print debug
                     JSONObject cartaoCreditoJson;
                     Conta contaAtual;
                     try {
                         cartaoCreditoJson = object2.getJSONObject("cartaoCredito");
-                        System.out.println(cartaoCreditoJson); //print debug
+                        //System.out.println(cartaoCreditoJson); //print debug
                         JSONObject cartaoDebitoJson;
                         cartaoDebitoJson = object2.getJSONObject("cartao");
-                        System.out.println(cartaoDebitoJson);
+                        //System.out.println(cartaoDebitoJson);
                         array3 = object2.getJSONArray("extrato");
                         contaAtual = new ContaCorrente(object2.getInt("numeroConta"), object2.getDouble("saldo"), new Cartao(cartaoDebitoJson.getInt("numero"), cartaoDebitoJson.getInt("csv")), object2.getDouble("dividaDeEmprestimo"), new CartaoCredito(cartaoCreditoJson.getDouble("fatura"), cartaoCreditoJson.getInt("indexMesDaFatura"), cartaoCreditoJson.getBoolean("faturaPaga"), cartaoCreditoJson.getDouble("limite"), cartaoCreditoJson.getInt("numero"), cartaoCreditoJson.getInt("csv")));
-                        System.out.println("Conta corrente foi criada"); //print debug
-                        
+                        //System.out.println("Conta corrente foi criada"); //print debug
+
                     }catch (JSONException e){
                         JSONObject cartaoDebitoJson;
                         cartaoDebitoJson = object2.getJSONObject("cartao");
-                        System.out.println(cartaoDebitoJson);
+                        //System.out.println(cartaoDebitoJson);
                         array3 = object2.getJSONArray("extrato");
                         contaAtual = new ContaPoupanca(object2.getInt("numeroConta"), object2.getDouble("saldo"), new Cartao(cartaoDebitoJson.getInt("numero"), cartaoDebitoJson.getInt("csv")), object2.getDouble("dividaDeEmprestimo"));
-                        System.out.println("Conta poupanca foi criada"); //print debug
+                        //System.out.println("Conta poupanca foi criada"); //print debug
                     }
                     for(int x = 0; x < array3.length(); x++){
                         JSONObject object3 = array3.getJSONObject(x);
-                        System.out.println(object3.getString("mesAtual"));
+                        //System.out.println(object3.getString("mesAtual"));
                         Movimentacao movimentacao = new Movimentacao(object3.getString("mesAtual"), object3.getDouble("dinheiroMovimentado"), object3.getString("tipoDaMovimentacao"));
                         contaAtual.setExtrato(movimentacao);
                         cliente.setContas(contaAtual);
@@ -85,10 +73,10 @@ public class ArquivoDeClientes {
                 clientes.add(cliente);
             }
             RegistroDeClientes.getInstancia().setClientes(clientes);
-            //print debug
-            for(Cliente cliente : clientes){
-                System.out.println(cliente);
-            }
+
+            //for(Cliente cliente : clientes){
+                //System.out.println(cliente);
+            //}
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -96,9 +84,7 @@ public class ArquivoDeClientes {
 
     public void escreverJson(ArrayList<Cliente> clientes) throws IOException {
         try (Writer writer = new FileWriter("clientes.json")) {
-            Gson gson = new GsonBuilder().create();
             JSONArray jsonArray = new JSONArray();
-            JSONArray jsonArray2 = new JSONArray();
             for(Cliente cliente : clientes){
                 JSONObject cliente2 = new JSONObject();
                 cliente2.put("nome", cliente.getNome());
@@ -106,10 +92,7 @@ public class ArquivoDeClientes {
                 JSONArray contas = new JSONArray(cliente.getContas());
                 cliente2.put("contas", contas);
                 jsonArray.put(cliente2);
-
             }
-            //gson.toJson(jsonArray, writer);
-
             writer.write(jsonArray.toString());
         }
     }

@@ -11,10 +11,6 @@ import br.winxbank.sistemaclientes.RegistroDeClientes;
 import br.winxbank.tempo.Ano;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -27,10 +23,10 @@ public class Main {
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
         int decisao = 1;
         Cliente clienteAtual = new Cliente();
-        //RegistroDeClientes.getInstancia().printarListaDeClientes();
+        ArquivoDeClientes.getInstancia().readjason();
+        RegistroDeClientes.getInstancia().printarListaDeClientes();
             while (decisao == 1 || decisao == 2 || decisao == 3 || decisao == 4 || decisao == 5 || decisao == 6 || decisao == 7 || decisao == 8 || decisao == 9 || decisao == 10 || decisao == 11 || decisao == 12 || decisao == 13 || decisao == 14 || decisao == 15 || decisao == 16 || decisao == 17){
                 Scanner sc = new Scanner(System.in);
-                ArquivoDeClientes.getInstancia().readjason();
                 if(clienteAtual.getNome() != null){
                     System.out.println("------------------------------------------------");
                     System.out.println("Cliente atual: ");
@@ -108,6 +104,7 @@ public class Main {
                             int numeroConta = sc.nextInt();
                             Conta conta2 = clienteAtual.selecionarConta(numeroConta);
                             conta2.depositar();
+
                             RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
                             break;
                         case 7: // COMPRAR
@@ -207,8 +204,7 @@ public class Main {
                 }catch (InputMismatchException e){
                     System.out.println("Opcao invalida. Digite um novo valor.");
                 }
-                //ArquivoDeClientes.getInstancia().escreverJson(RegistroDeClientes.getInstancia().getClientes());
+                ArquivoDeClientes.getInstancia().escreverJson(RegistroDeClientes.getInstancia().getClientes());
             }
-
     }
 }

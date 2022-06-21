@@ -1,7 +1,5 @@
 package br.winxbank.random;
 
-import br.winxbank.repository.ArquivoCsv;
-
 import java.util.HashSet;
 
 /**
