@@ -1,6 +1,7 @@
 package br.winxbank.sistemabancario;
 
 
+import br.winxbank.exception.BankAccountNotFoundException;
 import br.winxbank.random.MathRandomCsvWithSeed;
 import br.winxbank.random.MathRandomNumCartaoWithSeed;
 import br.winxbank.random.MathRandomNumContaWithSeed;
@@ -76,6 +77,9 @@ public class Banco {
         Scanner sc = new Scanner(System.in);
         int numeroConta = sc.nextInt();
         Conta contaSelecionada = cliente.selecionarConta(numeroConta);
+        if(contaSelecionada == null){
+            throw new BankAccountNotFoundException();
+        }
         cliente.apagarConta(contaSelecionada);
         System.out.println("Sua conta foi apagada com sucesso!");
     }

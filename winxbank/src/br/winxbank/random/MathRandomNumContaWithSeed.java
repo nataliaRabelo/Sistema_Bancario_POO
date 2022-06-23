@@ -1,6 +1,7 @@
 package br.winxbank.random;
 
 import java.util.HashSet;
+import java.util.Random;
 
 /**
  * @author Natália Bruno Rabelo.
@@ -15,9 +16,11 @@ public class MathRandomNumContaWithSeed {
      */
     public static int generateRandom(){
 
+        Random randomNum = new Random();
+        int number = randomNum.nextInt(1, 11); // gera uma seed de 1 a 10
         int min = 10000;
         int max = 99999;
-        int seed = 5;
+        int seed = number;
 
         int random = randomNext(min, max, seed);
         while (numeros.contains(random)){

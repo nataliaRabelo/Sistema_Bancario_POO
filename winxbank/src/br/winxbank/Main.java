@@ -1,5 +1,7 @@
 package br.winxbank;
 
+import br.winxbank.exception.BankAccountNotFoundException;
+import br.winxbank.exception.YouAreNotLoggedInException;
 import br.winxbank.repository.ArquivoDeClientes;
 import br.winxbank.sistemabancario.Banco;
 import br.winxbank.sistemabancario.Conta;
@@ -58,54 +60,90 @@ public class Main {
                                 Cliente cliente = RegistroDeClientes.getInstancia().retornarCliente(cpf);
                                 if(cliente.getClass() == ClienteWinx.class){
                                     clienteAtual = new ClienteWinx(cliente);
-                                    clienteAtual.setContas(cliente.acessarContas());
+                                    clienteAtual.setContas(cliente.getContas());
                                 }
                                 else{
                                     clienteAtual = new Cliente(cliente);
-                                    clienteAtual.setContas(cliente.acessarContas());
+                                    clienteAtual.setContas(cliente.getContas());
                                 }
                             }catch (NullPointerException e){
                                 System.out.println("Cliente inexistente.");
                             }
-
                             break;
                         // --------------------- MENU --------------------- OBS: Depois de haver usuario logado
                         case 3: // ABRIR CONTA
-                            Conta conta = Banco.getInstancia().abrirNovaConta();
-                            Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
-                            conta.setExtrato(movimentacao);
-                            clienteAtual.setContas(conta);
                             try {
-                                if(conta.getSaldo() >= 100000 || clienteAtual.acessarContas().getSaldo() >= 100000){
-                                    System.out.println("Parabens, voce tem direito a ser ClienteWinx!");
-                                    ClienteWinx clienteWinx = new ClienteWinx(clienteAtual.getNome(), clienteAtual.getCpf(), 0);
-                                    clienteWinx.setContas(clienteAtual.getContas());
-                                    RegistroDeClientes.getInstancia().atualizarCliente(clienteWinx);
-                                    clienteAtual = clienteWinx;
+                                if(clienteAtual.getCpf() == null){
+                                    throw new YouAreNotLoggedInException();
                                 }
-                                else{
+                                try {
+                                    Conta conta = Banco.getInstancia().abrirNovaConta();
+                                    Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
+                                    conta.setExtrato(movimentacao);
+                                    clienteAtual.setContas(conta);
+                                    if(conta.getSaldo() >= 100000 || clienteAtual.acessarContas().getSaldo() >= 100000){
+                                        System.out.println("Parabens, voce tem direito a ser ClienteWinx!");
+                                        ClienteWinx clienteWinx = new ClienteWinx(clienteAtual.getNome(), clienteAtual.getCpf(), 0);
+                                        clienteWinx.setContas(clienteAtual.getContas());
+                                        clienteAtual = clienteWinx;
+                                    }
+                                }catch (NullPointerException e){
+                                    System.out.println("Opcao invalida. Digite outro valor.");
+                                }finally {
                                     RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
                                 }
-                            }catch (NullPointerException e){
-                                System.out.println("Opcao invalida. Digite outro valor.");
+                            }catch (YouAreNotLoggedInException e){
+                                System.out.println(e.getMessage());
                             }
                             break;
                         case 4: // FECHAR CONTA
-                            Banco.getInstancia().fecharConta(clienteAtual);
-                            RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
+                            try {
+                                if(clienteAtual.getCpf() == null){
+                                    throw new YouAreNotLoggedInException();
+                                }
+                                try {
+                                    Banco.getInstancia().fecharConta(clienteAtual);
+                                    RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
+                                }catch (BankAccountNotFoundException e){
+                                    System.out.println(e.getMessage());
+                                }
+                            }catch (YouAreNotLoggedInException e){
+                                System.out.println(e.getMessage());
+                            }
                             break;
                         case 5: // APAGAR USUARIO
-                            RegistroDeClientes.getInstancia().removerCliente(clienteAtual);
-                            clienteAtual = new Cliente();
+                            try {
+                                if(clienteAtual.getCpf() == null){
+                                    throw new YouAreNotLoggedInException();
+                                }
+                                RegistroDeClientes.getInstancia().removerCliente(clienteAtual);
+                                clienteAtual = new Cliente();
+                            }catch (YouAreNotLoggedInException e){
+                                System.out.println(e.getMessage());
+                            }
                             break;
                         case 6: // DEPOSITAR
-                            //TODO: fazer contas do cliente aparecerem nesse momento
-                            System.out.println("Digite o numero da conta que deseja apagar:");
-                            int numeroConta = sc.nextInt();
-                            Conta conta2 = clienteAtual.selecionarConta(numeroConta);
-                            conta2.depositar();
+                            try {
+                                if(clienteAtual.getCpf() == null){
+                                    throw new YouAreNotLoggedInException();
+                                }
+                                System.out.println("Visualize suas contas abaixo. Digite o numero da conta que deseja depositar:");
+                                RegistroDeClientes.getInstancia().visualizarContas(clienteAtual);
+                                int numeroConta = sc.nextInt();
 
-                            RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
+                                Conta conta2 = clienteAtual.selecionarConta(numeroConta);
+                                try {
+                                    if(conta2 == null){
+                                        throw new BankAccountNotFoundException();
+                                    }
+                                    conta2.depositar();
+                                    RegistroDeClientes.getInstancia().atualizarCliente(clienteAtual);
+                                }catch (BankAccountNotFoundException e){
+                                    System.out.println(e.getMessage());
+                                }
+                            }catch (YouAreNotLoggedInException e){
+                                System.out.println(e.getMessage());
+                            }
                             break;
                         case 7: // COMPRAR
                             System.out.println("Você está comprando...");
@@ -203,8 +241,9 @@ public class Main {
                     }
                 }catch (InputMismatchException e){
                     System.out.println("Opcao invalida. Digite um novo valor.");
+                }finally {
+                    ArquivoDeClientes.getInstancia().escreverJson(RegistroDeClientes.getInstancia().getClientes());
                 }
-                ArquivoDeClientes.getInstancia().escreverJson(RegistroDeClientes.getInstancia().getClientes());
             }
     }
 }

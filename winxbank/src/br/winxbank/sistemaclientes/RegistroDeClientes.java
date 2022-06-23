@@ -57,10 +57,12 @@ public class RegistroDeClientes {
         System.out.println("Seu usuario está sendo atualizado...");
         for(int i = 0; i < clientes.size(); i++){
             if(clientes.get(i).cpf.equals(cliente.cpf)){
-                    clientes.remove(clientes.get(i));
+                clientes.remove(clientes.get(i));
+                clientes.add(cliente);
             }
+
         }
-        clientes.add(cliente);
+
     }
 
     /**
@@ -69,9 +71,9 @@ public class RegistroDeClientes {
      */
     public void removerCliente(Cliente cliente){
         System.out.println("Seu usuario está sendo apagado...");
-        for(Cliente clienteDaLista : clientes){
-            if(clienteDaLista.cpf.equals(cliente.cpf)){
-                clientes.remove(cliente);
+        for(int i = 0; i < this.clientes.size(); i++){
+            if(this.clientes.get(i).cpf.equals(cliente.cpf)){
+                this.clientes.remove(this.clientes.get(i));
             }
         }
     }
