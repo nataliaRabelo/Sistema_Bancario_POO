@@ -1,16 +1,13 @@
 package br.winxbank.sistemabancario;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Dani.
  * Classe responsável por representar uma conta poupança
  */
-public class ContaPoupanca extends Conta implements OperacoesAutomaticas, Serializable {
+public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
 
-
-    private static final long serialVersionUID = 5L;
     ArrayList<String> informeRendimento;
     /**
      * Construtor padrão da classe conta.
@@ -21,10 +18,6 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas, Serial
      */
     public ContaPoupanca(int numeroConta, double saldo, Cartao cartao, double dividaDeEmprestimo) {
         super(numeroConta, saldo, cartao, dividaDeEmprestimo);
-    }
-
-    public ContaPoupanca(String numeroConta, String saldo, Cartao cartao, String dividaDeEmprestimo, ArrayList<Movimentacao> movimentacoes) {
-        super(Integer.parseInt(numeroConta), Double.parseDouble(saldo), cartao, Double.parseDouble(dividaDeEmprestimo), movimentacoes);
     }
 
 

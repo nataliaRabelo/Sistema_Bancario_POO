@@ -1,23 +1,17 @@
 package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.Conta;
-import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Dani
  * Esta classe é responsável por representar uma entidade Cliente.
  */
-public class Cliente implements Serializable {
-    @SerializedName("nome")
+public class Cliente{
     protected String nome;
-    @SerializedName("cpf")
     protected String cpf;
-    @SerializedName("contas")
     protected ArrayList<Conta> contas = new ArrayList<>();
-    private static final long serialVersionUID = 4550979629324913441L;
 
     /**
      * Construtor padrão do cliente.

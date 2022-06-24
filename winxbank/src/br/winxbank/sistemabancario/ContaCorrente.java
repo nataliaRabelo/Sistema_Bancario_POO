@@ -1,16 +1,14 @@
 package br.winxbank.sistemabancario;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Dani
  * Esta classe é responsável por representar uma entidade ContaCorrente.
  */
-public class ContaCorrente extends Conta implements OperacoesAutomaticas, Serializable {
+public class ContaCorrente extends Conta implements OperacoesAutomaticas{
 
     private CartaoCredito cartaoCredito;
-    private static final long serialVersionUID = 4L;
 
     /**
      * Construtor padrão da classe conta.
@@ -23,13 +21,7 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas, Serial
         super(numeroConta, saldo, cartaoDebito, dividaDeEmprestimo);
         this.cartaoCredito = cartaoCredito;
     }
-
-
-    public ContaCorrente(String numeroConta, String saldo, CartaoCredito cartaoCredito, Cartao cartao, String dividaDeEmprestimo, ArrayList<Movimentacao> movimentacoes) {
-        super(Integer.parseInt(numeroConta), Double.parseDouble(saldo), cartao, Double.parseDouble(dividaDeEmprestimo), movimentacoes);
-        this.cartaoCredito = cartaoCredito;
-    }
-
+    
 
     /**
      * Método responsável por pagar fatura com o saldo da conta.

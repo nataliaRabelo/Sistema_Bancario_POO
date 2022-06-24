@@ -9,11 +9,10 @@ import java.io.Serializable;
  * Esta classe é responsável por representar uma entidade ClienteWinx.
  * Um tipo de cliente sem vantagens no banco.
  */
-public class ClienteWinx extends Cliente implements Serializable {
+public class ClienteWinx extends Cliente{
 
     private int pontosDeCompra;
     private final int BONUSDECOMPRA = 3;
-    private static final long serialVersionUID = 7L;
 
     /**
      * Construtor padrão do cliente.
