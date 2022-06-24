@@ -1,10 +1,6 @@
 package br.winxbank.sistemabancario;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -13,15 +9,10 @@ import java.util.Scanner;
  */
 public abstract class Conta {
 
-    @SerializedName("numeroConta")
     protected int numeroConta;
-    @SerializedName("saldo")
     protected double saldo;
-    @SerializedName("cartao")
     protected Cartao cartao;
-    @SerializedName("dividaDeEmprestimo")
     protected double dividaDeEmprestimo;
-    @SerializedName("extrato")
     ArrayList<Movimentacao> extrato = new ArrayList<>();
 
     /**

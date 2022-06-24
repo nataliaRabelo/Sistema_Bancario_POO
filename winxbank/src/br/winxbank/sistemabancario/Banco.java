@@ -33,7 +33,7 @@ public class Banco {
     }
 
     /**
-     * Classe responsável por abrir uma nova conta.
+     * Método responsável por abrir uma nova conta.
      */
     public Conta abrirNovaConta() {
         Scanner sc = new Scanner(System.in);

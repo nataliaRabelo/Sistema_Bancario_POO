@@ -2,6 +2,7 @@ package br.winxbank.repository;
 
 import br.winxbank.sistemabancario.*;
 import br.winxbank.sistemaclientes.Cliente;
+import br.winxbank.sistemaclientes.ClienteWinx;
 import br.winxbank.sistemaclientes.RegistroDeClientes;
 
 import java.io.*;
@@ -21,8 +22,9 @@ public class ArquivoDeClientes {
     private static ArquivoDeClientes instancia;
 
     public void readjason() throws IOException {
-        JsonElement json = null;
+        JsonElement json;
         ArrayList<Cliente> clientes  = new ArrayList<>();
+        ArrayList<Integer> pontosDeCompra  = new ArrayList<>();
         try (Reader reader = new InputStreamReader(new FileInputStream("clientes.json"), "UTF-8")) {
             json = JsonParser.parseReader(reader);
             //System.out.println(json);
@@ -30,7 +32,14 @@ public class ArquivoDeClientes {
             for(int i=0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
-                Cliente cliente = new Cliente(object.getString("nome"), object.getString("cpf"));
+                //System.out.println(object.getString("pontosDeCompra"));
+                Cliente cliente;
+                if(object.has("pontosDeCompra")){
+                    cliente = new ClienteWinx(object.getString("nome"), object.getString("cpf"), object.getInt("pontosDeCompra"));
+                }
+                else{
+                    cliente = new Cliente(object.getString("nome"), object.getString("cpf"));
+                }
                 //System.out.println("Cliente criado: "+ cliente.getNome() + cliente.getCpf()); //print debug
                 JSONArray array2;
                 //System.out.println("Array de contas do cliente atual: " + object.getJSONArray("contas")); //print debug
@@ -71,7 +80,9 @@ public class ArquivoDeClientes {
 
                 }
                 clientes.add(cliente);
+                // transformando os clientes que merecem em winx.
             }
+            //selecionarClientesWinx(clientes);
             RegistroDeClientes.getInstancia().setClientes(clientes);
 
             //for(Cliente cliente : clientes){
@@ -82,6 +93,11 @@ public class ArquivoDeClientes {
         }
     }
 
+    /**
+     * Método responsável por escrever um arquivo json com base na lista de registro de clientes.
+     * @param clientes
+     * @throws IOException
+     */
     public void escreverJson(ArrayList<Cliente> clientes) throws IOException {
         try (Writer writer = new FileWriter("clientes.json")) {
             JSONArray jsonArray = new JSONArray();
@@ -89,6 +105,9 @@ public class ArquivoDeClientes {
                 JSONObject cliente2 = new JSONObject();
                 cliente2.put("nome", cliente.getNome());
                 cliente2.put("cpf", cliente.getCpf());
+                if(cliente.getClass() == ClienteWinx.class){
+                    cliente2.put("pontosDeCompra", ((ClienteWinx) cliente).getPontosDeCompra());
+                }
                 JSONArray contas = new JSONArray(cliente.getContas());
                 cliente2.put("contas", contas);
                 jsonArray.put(cliente2);
@@ -96,6 +115,8 @@ public class ArquivoDeClientes {
             writer.write(jsonArray.toString());
         }
     }
+
+
     /**
      * Singleton que só permite uma instância do objeto ser criada, quando o atributo estático instancia tem o valor nulo.
      * @return

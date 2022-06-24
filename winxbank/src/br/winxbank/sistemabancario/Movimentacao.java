@@ -1,21 +1,15 @@
 package br.winxbank.sistemabancario;
 
 import br.winxbank.tempo.Ano;
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 /**
  * @author Natália.
  * Classe responsável por representar uma entidade movimentacao bancária.
  */
-public class Movimentacao implements Serializable {
+public class Movimentacao{
 
-    @SerializedName("mesAtual")
     private String mesAtual;
-    @SerializedName("dinheiroMovimentado")
     private double dinheiroMovimentado;
-    @SerializedName("tipoDaMovimentacao")
     private TipoDaMovimentacao tipoDaMovimentacao;
 
     /**
