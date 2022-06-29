@@ -2,12 +2,9 @@ package br.winxbank.sistemabancario;
 
 
 import br.winxbank.exception.BankAccountNotFoundException;
-import br.winxbank.random.MathRandomCsvWithSeed;
-import br.winxbank.random.MathRandomNumCartaoWithSeed;
-import br.winxbank.random.MathRandomNumContaWithSeed;
+import br.winxbank.random.RandomNumberGenerator;
 import br.winxbank.sistemaclientes.Cliente;
 import br.winxbank.sistemaclientes.RegistroDeClientes;
-import br.winxbank.tempo.Ano;
 
 import java.util.Scanner;
 
@@ -42,11 +39,11 @@ public class Banco {
         decisao = sc.nextInt();
         if(decisao == 1){
             System.out.println("Voce esta criando uma conta corrente...");
-            int numeroCartao = MathRandomNumCartaoWithSeed.generateRandom();
-            int csv = MathRandomCsvWithSeed.generateRandom();
+            int numeroCartao = RandomNumberGenerator.gerarNumCartao();
+            int csv = RandomNumberGenerator.gerarCsv();
             Cartao cartao = new Cartao(numeroCartao, csv);
             CartaoCredito cartaoCredito = new CartaoCredito(numeroCartao, csv);
-            int numeroConta = MathRandomNumContaWithSeed.generateRandom();
+            int numeroConta = RandomNumberGenerator.gerarNumConta();
             System.out.println("Digite o saldo que deseja colocar na sua conta ");
             double saldo = sc.nextDouble();
             Conta contaCorrente = new ContaCorrente(numeroConta, saldo, cartao, 0, cartaoCredito);
@@ -55,10 +52,10 @@ public class Banco {
         }
         else if(decisao == 2){
             System.out.println("Voce esta criando uma conta poupanca...");
-            int numeroCartao = MathRandomNumCartaoWithSeed.generateRandom();
-            int csv = MathRandomCsvWithSeed.generateRandom();
+            int numeroCartao = RandomNumberGenerator.gerarNumCartao();
+            int csv = RandomNumberGenerator.gerarCsv();
             Cartao cartao = new Cartao(numeroCartao, csv);
-            int numeroConta = MathRandomNumContaWithSeed.generateRandom();
+            int numeroConta = RandomNumberGenerator.gerarNumConta();
             System.out.println("Digite o saldo que deseja colocar na sua conta:");
             double saldo = sc.nextDouble();
             ContaPoupanca contaPoupanca = new ContaPoupanca(numeroConta, saldo, cartao, 0);
@@ -92,17 +89,22 @@ public class Banco {
         if(!(RegistroDeClientes.getInstancia().getClientes().isEmpty())){
             for(Cliente cliente : RegistroDeClientes.getInstancia().getClientes()){
                 for(Conta conta : cliente.getContas()){
+                    conta.cobrarJurusEmprestimo();
                     if(conta.getClass() == ContaPoupanca.class){
                         ((ContaPoupanca) conta).acrescentarRendimento();
                     }
                     else if(conta.getClass() == ContaCorrente.class){
                         ((ContaCorrente) conta).descontarTaxa();
-                        ((ContaCorrente) conta).getCartaoCredito().cobrarJurus();
+                        if(((ContaCorrente) conta).getCartaoCredito().getFatura() > 0){
+                            ((ContaCorrente) conta).getCartaoCredito().cobrarJurus();
+                        }
                     }
                 }
             }
         }
     }
+
+
     public void setReceitas(double valor) {
         if(valor >= 0){
             this.receitas += valor;

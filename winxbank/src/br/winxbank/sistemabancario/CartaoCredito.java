@@ -2,6 +2,8 @@ package br.winxbank.sistemabancario;
 
 import br.winxbank.tempo.Ano;
 
+import java.util.Scanner;
+
 /**
  * @author Carol
  * Esta classe é responsável por representar uma entidade CartaoCredito.
@@ -21,6 +23,7 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
      */
     public CartaoCredito(int numero, int csv) {
         super(numero, csv);
+        this.limite = 1000; //as contas correntes iniciam com esse limite quando criadas pela primeira vez
     }
 
 
@@ -42,24 +45,25 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
 
     }
 
-
     /**
      * Método responsável por creditar um valor da fatura do cartão de crédito.
      * Quando esse método for chamado, é atribuído um mês referente àquela fatura.
      * @param valor
      */
     public void creditar(double valor){
+        setFatura(valor);
         this.indexMesDaFatura = Ano.getInstancia().getIndexMesAtual();
         this.mesDaFatura = Ano.getInstancia().getMesAtual();
-        setFatura(valor);
     }
 
     /**
-     * TODO: AJUSTAR LIMITE
      * Método responsável por ajustar o limite do cartão
      */
     public void ajustarLimite(){
+        Scanner sc = new Scanner(System.in);
         System.out.println("Digite o valor do limite do seu cartão que deseja ajustar: ");
+        double novoLimite = sc.nextDouble();
+        this.limite = novoLimite;
 
     }
 
@@ -69,18 +73,16 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
      * @param valor
      */
     public void setFatura(double valor) {
-        if(valor <= this.limite){
+        if(valor + fatura <= this.limite){
             this.fatura += valor;
         }
-        if (this.fatura == 0){
+        if(this.fatura <= 0){
             this.faturaPaga = true;
         }
-        else if(this.fatura > 0){
+        else{
             this.faturaPaga = false;
         }
-
     }
-
 
     public double getFatura() {
         return fatura;

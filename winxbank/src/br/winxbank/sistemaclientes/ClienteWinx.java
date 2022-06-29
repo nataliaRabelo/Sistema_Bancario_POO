@@ -1,8 +1,7 @@
 package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.Conta;
-
-import java.io.Serializable;
+import br.winxbank.sistemabancario.Movimentacao;
 
 /**
  * @author Dani
@@ -32,6 +31,7 @@ public class ClienteWinx extends Cliente{
     public ClienteWinx(Cliente cliente){
         this.nome = cliente.getNome();
         this.cpf = cliente.getCpf();
+        this.pontosDeCompra = ((ClienteWinx) cliente).getPontosDeCompra();
     }
 
     public int getPontosDeCompra() {
@@ -39,7 +39,7 @@ public class ClienteWinx extends Cliente{
     }
 
     public void obterPontosDeCompra(){
-        this.pontosDeCompra++;
+        this.pontosDeCompra = this.pontosDeCompra + 1;
     }
 
     /**
@@ -49,5 +49,8 @@ public class ClienteWinx extends Cliente{
     public void converterPontosEmSaldo(Conta conta){
         float saldoConvertido = this.pontosDeCompra * this.BONUSDECOMPRA;
         conta.setSaldo(saldoConvertido);
+        this.pontosDeCompra = 0;
+        Movimentacao movimentacao = new Movimentacao(saldoConvertido, Movimentacao.TipoDaMovimentacao.ENTRADA);
+        conta.setExtrato(movimentacao);
     }
 }

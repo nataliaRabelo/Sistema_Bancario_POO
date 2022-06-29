@@ -18,6 +18,10 @@ public class Cartao{
         this.csv = csv;
     }
 
+    public void debitar(Conta conta, double valor){
+        conta.setSaldo(-valor);
+    }
+
     public int getNumero() {
         return numero;
     }

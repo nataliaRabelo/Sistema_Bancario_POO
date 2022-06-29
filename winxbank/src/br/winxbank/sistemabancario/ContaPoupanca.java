@@ -1,6 +1,10 @@
 package br.winxbank.sistemabancario;
 
+import br.winxbank.repository.ArquivoInformeRendimento;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @author Dani.
@@ -8,7 +12,7 @@ import java.util.ArrayList;
  */
 public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
 
-    ArrayList<String> informeRendimento;
+    ArrayList<Movimentacao> informeRendimento = new ArrayList<>();
     /**
      * Construtor padrão da classe conta.
      *
@@ -20,20 +24,58 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
         super(numeroConta, saldo, cartao, dividaDeEmprestimo);
     }
 
+    @Override
+    public void comprar(double valor) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("A conta sera debitada...");
+            System.out.println("------------------------------------------------");
+            System.out.println(this.cartao.getNumero() + "\n" + this.cartao.csv);
+            System.out.println("------------------------------------------------");
+            System.out.println("Este e o cartao que deseja utilizar? Digite 1 (confirmar)");
+            int decisao2 = sc.nextInt();
+            if(decisao2 == 1){
+                cartao.debitar(this, valor);
+                System.out.println("Valor debitado.");
+            }
+            else{
+                System.out.println("Compra cancelada. Efetue a compra novamente.");
+        }
+    }
+
+    public void setInformeRendimento(Movimentacao movimentacao){
+        informeRendimento.add(movimentacao);
+    }
+
+    public ArrayList<Movimentacao> getInformeRendimento() {
+        return informeRendimento;
+    }
 
     /**
      * Método responsável por acrescentar rendimento sobre o saldo contido nesta conta.
      */
     public void acrescentarRendimento(){
-        this.saldo /= rendimentoMensalPoupanca;
-        double rendimentoDesteCaso = this.saldo * rendimentoMensalPoupanca;
+        double rendimentoDesteCaso = this.saldo / rendimentoMensalPoupanca;
+        this.saldo += rendimentoDesteCaso;
+        Movimentacao movimentacao = new Movimentacao(rendimentoDesteCaso, Movimentacao.TipoDaMovimentacao.ENTRADA);
+        this.setInformeRendimento(movimentacao);
         movimentacaoBancaria(rendimentoDesteCaso);
 
+    }
+
+    /**
+     * Método responsável por escrever um arquivo de um informe de rendimento.
+     */
+    public void gerarInformeRendimento() throws FileNotFoundException {
+        ArquivoInformeRendimento.getInstancia().gerarDocumento(this);
     }
 
     public String getTipoDaConta() {
         String tipoDaConta = "Poupanca";
         return tipoDaConta;
+    }
+
+    public ArrayList<Movimentacao> getInformeDeRendimento(){
+        return this.informeRendimento;
     }
 
     @Override

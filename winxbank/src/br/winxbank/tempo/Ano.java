@@ -8,8 +8,6 @@ import br.winxbank.sistemabancario.Banco;
  */
 public class Ano {
 
-    //TODO: Registrar mes atual em arquivo desde onde o programa parou, bem como registrar também onde contador parou.
-    private int indexInicial = 0; //index usado na primeira vez que rodar o programa e não existir nenhum arquivo com o registro do mes atual.
     private static Ano instancia;
     private String mesAtual;
     private int indexMesAtual;
@@ -24,11 +22,7 @@ public class Ano {
      */
     public int fazerMesPassar(){
         if(count % 5 == 0){
-            if(this.indexInicial == 0){
-                this.indexMesAtual = this.indexInicial;
-                this.indexInicial = 1;
-            }
-            else if (this.indexMesAtual == 11){
+            if (this.indexMesAtual == 11){
                 this.indexMesAtual = 0;
             }
             else{
@@ -53,6 +47,19 @@ public class Ano {
 
     public int getIndexMesAtual() {
         return indexMesAtual;
+    }
+
+    /**
+     * setter usado para leitura de arquivo e atribuição do mes atual com base neste.
+     * @param mes
+     */
+    public void setMesAtual(String mes){
+        mesAtual = mes;
+        for(int i = 0; i < meses.length; i++){
+            if(mes.equals(meses[i])){
+                indexMesAtual = i;
+            }
+        }
     }
 
     /**

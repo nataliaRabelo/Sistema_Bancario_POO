@@ -1,13 +1,16 @@
 package br.winxbank.sistemabancario;
 
+import br.winxbank.repository.ArquivoExtrato;
+import br.winxbank.repository.ArquivoInformeRendimento;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * @author Natália
  * Esta classe é responsável por representar uma entidade abstrata Conta.
  */
-public abstract class Conta {
+public abstract class Conta implements OperacoesAutomaticas{
 
     protected int numeroConta;
     protected double saldo;
@@ -65,22 +68,27 @@ public abstract class Conta {
     }
 
     /**
-     * Método responsável por gerar um extrato.
-     * TODO: fazer método responsável por gerar extrato.
+     * Método responsável por cobrar jurus de um emprestimo conforme meses passados.
      */
-    public void gerarExtrato() {
+    public void cobrarJurusEmprestimo(){
+        if(this.dividaDeEmprestimo > 0){
+            double resultado = dividaDeEmprestimo / taxaJurus;
+            this.dividaDeEmprestimo -= resultado;
+        }
+    }
 
+    /**
+     * Método responsável por gerar um extrato.
+     */
+    public void gerarExtrato() throws FileNotFoundException {
+        ArquivoExtrato.getInstancia().gerarDocumento(this);
     }
 
     /**
      * Método responsável por realizar uma transferência via pix a uma conta.
      */
-    public void fazerPix(Conta conta) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o valor do pix:");
-        double valor = sc.nextDouble();
-        this.saldo -= valor;
-        conta.saldo += valor;
+    public void fazerPix(Conta conta, double valor) {
+        conta.saldo+=valor;
     }
 
     /**
@@ -88,10 +96,7 @@ public abstract class Conta {
      *
      * @param valor
      */
-    public void comprar(double valor) {
-        //TODO: fazer opções de crédito e débito
-        this.saldo -= valor;
-    }
+    public abstract void comprar(double valor);
 
     /**
      * Método responsável por sacar um valor da conta.
@@ -103,13 +108,12 @@ public abstract class Conta {
     }
 
     /**
-     * Método responsável por depositar um valor na conta
+     * Método responsável por depositar um valor na conta.
+     * @return valor.
      */
-    public void depositar(){
-        System.out.println("Digite o valor que deseja depositar na sua conta:");
-        Scanner sc = new Scanner(System.in);
-        double valor = sc.nextDouble();
+    public double depositar(double valor){
         setSaldo(valor);
+        return valor;
     }
 
 
@@ -134,18 +138,11 @@ public abstract class Conta {
     }
 
     public void setSaldo(double valor) {
-        if(valor-this.saldo < 0){
-            this.saldo += saldo;
-        }
+            this.saldo += valor;
     }
 
     public void setExtrato(Movimentacao movimentacao){
         this.extrato.add(movimentacao);
-    }
-
-    @Override
-    public String toString() {
-        return "Conta [numeroConta=" + numeroConta + ", cartao=" + cartao + "]";
     }
 
 }

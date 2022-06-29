@@ -1,15 +1,9 @@
 package br.winxbank.sistemaclientes;
 
-import br.winxbank.repository.ArquivoDeClientes;
 import br.winxbank.sistemabancario.*;
-import br.winxbank.tempo.Ano;
-
-import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 /**
  * @author Natália
@@ -88,7 +82,7 @@ public class RegistroDeClientes {
                 System.out.println("[ Conta" + ((ContaPoupanca) conta).getTipoDaConta() + " no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format( conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ conta.getCartao().getCsv() + " ]");
             }
             else{
-                System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format(conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ conta.getCartao().getCsv() + " | Cartao Credito no: " + ((ContaCorrente) conta).getCartaoCredito().getNumero() + "| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + " ]");
+                System.out.println("[ Conta" + ((ContaCorrente) conta).getTipoDaConta() + "no: " + conta.getNumeroConta() + " | Saldo: " + new DecimalFormat("0.00").format(conta.getSaldo()) + " | DividaEmprestimo: " + conta.getDividaDeEmprestimo() + " | Cartao Debito no: " + conta.getCartao().getNumero() +"| csv: "+ conta.getCartao().getCsv() + " | Cartao Credito no: " + ((ContaCorrente) conta).getCartaoCredito().getNumero() + "| csv: "+ ((ContaCorrente) conta).getCartaoCredito().getCsv() + "| fatura: "+  ((ContaCorrente) conta).getCartaoCredito().getFatura() +" ]");
             }
         }
     }
@@ -144,6 +138,10 @@ public class RegistroDeClientes {
             System.out.println("------------------------------------------------");
 
         }
+    }
+
+    public void limparListaDeClientes(){
+        clientes.clear();
     }
 
     /**

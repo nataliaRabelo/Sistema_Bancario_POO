@@ -59,6 +59,12 @@ Este repositório está estruturado da seguinte forma:
 * documentos - Documentação anexa deste projeto.
 * src - Código fonte da aplicação de integração
   * src/main/ - Fonte principal da aplicação
+    * /exception/ - Excecoes do projeto
+    * /random/ - Camada referente à Geração de numeros aleatorios
+    * /repository/ - Camada de persistência de dados
+    * /sistemabancario/ - Camada com classes do sistema bancário
+    * /sistemaclientes/ - Camada com classes do sistema de clientes
+    * /tempo/ - Camada responsável por controlar uma simulação de tempo.
   * src/test/ - Fonte do teste de unidade e do teste de estresse
 
 # 6. Teste unitário do Projeto

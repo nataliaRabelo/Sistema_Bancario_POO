@@ -31,13 +31,6 @@ public class Movimentacao{
     }
 
     /**
-     * Construtor temporário para debug.
-     */
-    public Movimentacao(){
-
-    }
-
-    /**
      * Construtor padrão da classe Movimentacao
      * @param dinheiroMovimentado
      * @param tipoDaMovimentacao
