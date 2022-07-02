@@ -55,9 +55,9 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
      */
     public void acrescentarRendimento(){
         double rendimentoDesteCaso = this.saldo / rendimentoMensalPoupanca;
-        this.saldo += rendimentoDesteCaso;
-        Movimentacao movimentacao = new Movimentacao(rendimentoDesteCaso, Movimentacao.TipoDaMovimentacao.ENTRADA);
+        Movimentacao movimentacao = new Movimentacao(rendimentoDesteCaso-this.saldo, Movimentacao.TipoDaMovimentacao.ENTRADA);
         this.setInformeRendimento(movimentacao);
+        this.saldo += rendimentoDesteCaso;
         movimentacaoBancaria(rendimentoDesteCaso);
 
     }
@@ -69,11 +69,6 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
         ArquivoInformeRendimento.getInstancia().gerarDocumento(this);
     }
 
-    public String getTipoDaConta() {
-        String tipoDaConta = "Poupanca";
-        return tipoDaConta;
-    }
-
     public ArrayList<Movimentacao> getInformeDeRendimento(){
         return this.informeRendimento;
     }
@@ -81,5 +76,10 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
     @Override
     public void movimentacaoBancaria(double valor) {
         Banco.getInstancia().setDespesas(valor);
+    }
+
+    public String getTipoDaConta() {
+        String tipoDaConta = "Poupanca";
+        return tipoDaConta;
     }
 }

@@ -14,20 +14,9 @@ import java.util.Scanner;
  */
 public class Banco {
 
-    public double basileia;
     public double receitas;
     public double despesas;
     private static Banco instancia;
-
-
-    //TODO: ver como fazer, talvez tirar esse método.
-    public void ressarcirClientesEmCasoDeFalencia(){
-
-    }
-    //TODO: ver como fazer o calculo em cima de despesas e receitas.
-    public void calcularBasileia(){
-
-    }
 
     /**
      * Método responsável por abrir uma nova conta.

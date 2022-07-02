@@ -1,9 +1,11 @@
 package br.winxbank.sistemaclientes;
 
 import br.winxbank.sistemabancario.*;
-import java.text.DecimalFormat;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import java.text.DecimalFormat;
 
 /**
  * @author Natália
@@ -24,23 +26,33 @@ public class RegistroDeClientes {
         String nome = sc.nextLine();
         System.out.println("Digite o cpf:");
         String cpf = sc.nextLine();
-        Cliente cliente = new Cliente(nome, cpf);
-        Conta conta = Banco.getInstancia().abrirNovaConta();
-        cliente.setContas(conta);
-        if(conta.getSaldo() >= 100000){
-            System.out.println("Parabéns, você tem direito a ser ClienteWinx!");
-            ClienteWinx clienteWinx = new ClienteWinx(nome, cpf, 0);
-            Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
-            conta.setExtrato(movimentacao);
-            clienteWinx.setContas(conta);
-            clientes.add(clienteWinx);
+        boolean cpfExistente = checarCpf(cpf);
+        if(cpfExistente || clientes.isEmpty()){
+            Cliente cliente = new Cliente(nome, cpf);
+            Conta conta = Banco.getInstancia().abrirNovaConta();
+            cliente.setContas(conta);
+            if(conta.getSaldo() >= 100000){
+                System.out.println("Parabéns, você tem direito a ser ClienteWinx!");
+                ClienteWinx clienteWinx = new ClienteWinx(nome, cpf, 0);
+                Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
+                conta.setExtrato(movimentacao);
+                clienteWinx.setContas(conta);
+                clientes.add(clienteWinx);
+                if(conta.getClass() == ContaPoupanca.class){
+                    ((ContaPoupanca) conta).setInformeRendimento(movimentacao);
+                }
+            }
+            else if(conta.getSaldo() < 100000) {
+                Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
+                conta.setExtrato(movimentacao);
+                clientes.add(cliente);
+                if(conta.getClass() == ContaPoupanca.class){
+                    ((ContaPoupanca) conta).setInformeRendimento(movimentacao);
+                }
+            }
+        }else{
+            System.out.println("Usuario nao pode ser criado. CPF ja existente no registro.");
         }
-        else if(conta.getSaldo() < 100000) {
-            Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
-            conta.setExtrato(movimentacao);
-            clientes.add(cliente);
-        }
-
     }
 
     /**
@@ -70,6 +82,20 @@ public class RegistroDeClientes {
                 this.clientes.remove(this.clientes.get(i));
             }
         }
+    }
+
+    /**
+     * Método responsável por checar se o cpf já existe no registro.
+     * @param cpf
+     * @return
+     */
+    public boolean checarCpf(String cpf){
+        for (Cliente cliente : clientes){
+            if(cliente.cpf.equals(cpf)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -152,9 +178,6 @@ public class RegistroDeClientes {
         this.clientes.addAll(clientes);
     }
 
-    public void setClientes(Cliente cliente) {
-        this.clientes.add(cliente);
-    }
 
     public ArrayList<Cliente> getClientes() {
         return clientes;

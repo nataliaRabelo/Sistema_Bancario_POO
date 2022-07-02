@@ -84,6 +84,9 @@ public class Main {
                                     Conta conta = Banco.getInstancia().abrirNovaConta();
                                     Movimentacao movimentacao = new Movimentacao(conta.getSaldo(), Movimentacao.TipoDaMovimentacao.ENTRADA);
                                     conta.setExtrato(movimentacao);
+                                    if(conta.getClass() == ContaPoupanca.class){
+                                        ((ContaPoupanca) conta).setInformeRendimento(movimentacao);
+                                    }
                                     clienteAtual.setContas(conta);
                                     if(conta.getSaldo() >= 100000 || clienteAtual.acessarContas().getSaldo() >= 100000){
                                         System.out.println("Parabens, voce tem direito a ser ClienteWinx!");
@@ -365,7 +368,7 @@ public class Main {
                                 if(conta == null){
                                     throw new BankAccountNotFoundException();
                                 }
-                                ArquivoExtrato.getInstancia().gerarDocumento(conta);
+                                conta.gerarExtrato();
                             }catch (YouAreNotLoggedInException | BankAccountNotFoundException e){
                                 System.out.println(e.getMessage());
                             }
@@ -386,7 +389,7 @@ public class Main {
                                     throw new BankAccountIsNotSavingsAccountException();
                                 }
                                 try {
-                                    ((ContaPoupanca) conta).acrescentarRendimento();
+                                    ((ContaPoupanca) conta).gerarInformeRendimento();
                                 }catch (ClassCastException e){
                                     System.out.println("Conta bancaria nao e poupanca.");
                                 }
