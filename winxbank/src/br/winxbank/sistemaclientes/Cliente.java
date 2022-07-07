@@ -39,18 +39,6 @@ public class Cliente{
 
     }
 
-    /**
-     * Construtor alternativo para leitura de arquivo json.
-     * @param nome
-     * @param cpf
-     * @param contas
-     */
-    public Cliente(String nome, String cpf, Object contas) {
-        this.nome = nome;
-        this.cpf = cpf;
-        setContas((Conta) contas);
-    }
-
     public void apagarConta(Conta conta) {
         this.contas.remove(conta);
     }

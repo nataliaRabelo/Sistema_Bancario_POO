@@ -100,18 +100,6 @@ public class CartaoCredito extends Cartao implements OperacoesAutomaticas{
 
     }
 
-    public int getIndexMesDaFatura() {
-        return indexMesDaFatura;
-    }
-
-    public boolean isFaturaPaga() {
-        return faturaPaga;
-    }
-
-    public double getLimite() {
-        return limite;
-    }
-
     /**
      * Método responsável por gerar receita ao banco do valor pago a mais da cobrança de jurus em cima de uma fatura.
      * @param valor

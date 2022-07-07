@@ -1,4 +1,4 @@
-package br.winxbank.repository;
+package br.winxbank.geradordedocumentos;
 
 import br.winxbank.sistemabancario.Conta;
 import br.winxbank.sistemabancario.Movimentacao;

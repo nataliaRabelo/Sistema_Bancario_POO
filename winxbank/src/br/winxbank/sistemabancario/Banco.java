@@ -6,13 +6,16 @@ import br.winxbank.random.RandomNumberGenerator;
 import br.winxbank.sistemaclientes.Cliente;
 import br.winxbank.sistemaclientes.RegistroDeClientes;
 
+import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  * @author Natália.
  * Classe responsável por administrar um banco.
  */
-public class Banco {
+public class Banco implements Serializable {
 
     public double receitas;
     public double despesas;
@@ -93,6 +96,26 @@ public class Banco {
         }
     }
 
+    /**
+     * Método responsável por visualizar detalhes do banco.
+     */
+    public void printarBanco(){
+        Random randomNum = new Random();
+        System.out.println("Despesas do banco: " + new DecimalFormat("0.00").format(this.despesas));
+        System.out.println("Receitas do banco: " + new DecimalFormat("0.00").format(this.receitas));
+        if(this.despesas > this.receitas){
+            this.despesas/=randomNum.nextInt(1000000000, 1999999999);
+        }
+    }
+
+
+    public double getDespesas() {
+        return despesas;
+    }
+
+    public double getReceitas() {
+        return receitas;
+    }
 
     public void setReceitas(double valor) {
         if(valor >= 0){
@@ -106,6 +129,11 @@ public class Banco {
         }
     }
 
+    public void setBanco(Banco banco){
+        this.despesas = banco.getDespesas();
+        this.receitas = banco.getReceitas();
+    }
+
     /**
      * Singleton que só permite uma instância do objeto ser criada, quando o atributo estático instancia tem o valor nulo.
      * @return
@@ -116,4 +144,5 @@ public class Banco {
         }
         return instancia;
     }
+
 }

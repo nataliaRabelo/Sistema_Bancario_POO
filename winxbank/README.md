@@ -1,6 +1,6 @@
 # 1. Projeto WinxBank
 
-O WinxBank trata-se de um sistema desenvolvido para implementar um projeto piloto de um sistema bancaário digital. O objetivo é fornecer esta implementação como entrega do trabalho final de tema de escolha livre para a disciplina Programação Orientada a Objetos da Universidade Federal Fluminense (UFF), podendo ser extendido para outros fins posteriores.
+O WinxBank trata-se de um sistema desenvolvido para implementar um projeto piloto de um sistema bancário digital. O objetivo é fornecer esta implementação como entrega do trabalho final de tema de escolha livre para a disciplina Programação Orientada a Objetos da Universidade Federal Fluminense (UFF), podendo ser extendido para outros fins posteriores.
 
 O WinxBank possui dois grandes objetivos, o de produto e o de projeto, descritos abaixo:
 
@@ -36,30 +36,18 @@ Você pode executar em modo produção ou debug diretamente através da IDE. Voc
 mvn clean compile exec:java
 ```
 
-# 4. Estrutura desse repositório
+# 4. Estrutura deste Repositório
 
 **EM Construção**
 
 Este repositório está estruturado da seguinte forma:
 
-documentos - Documentação anexa deste projeto.
-src - Código fonte da aplicação de integração
-src/main/ - Fonte principal da aplicação
-src/test/ - Fonte do teste de unidade e do teste de estresse
-tools - Scripts para execução automática do teste de estresse, geração de javadoc, inicialização, entre outras ferramentar internas desenvolvidas para este projeto
-
-# 5. Estrutura deste Repositório
-
-**EM Construção**
-
-Este repositório está estruturado da seguinte forma:
-
-* documentos - Documentação anexa deste projeto.
 * src - Código fonte da aplicação de integração
-  * src/main/ - Fonte principal da aplicação
+  * src/br.winxbank/ - Fonte principal da aplicação
     * /exception/ - Excecoes do projeto
+    * /geradordedocumentos/ - Camada referente à geração de documentos requisitados pelo cliente
     * /random/ - Camada referente à Geração de numeros aleatorios
-    * /repository/ - Camada de persistência de dados
+    * /repository/ - Camada de persistência de dados em arquivos
     * /sistemabancario/ - Camada com classes do sistema bancário
     * /sistemaclientes/ - Camada com classes do sistema de clientes
     * /tempo/ - Camada responsável por controlar uma simulação de tempo.

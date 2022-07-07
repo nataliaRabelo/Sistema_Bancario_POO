@@ -1,4 +1,4 @@
-package br.winxbank.repository;
+package br.winxbank.geradordedocumentos;
 
 import br.winxbank.exception.BankAccountIsNotSavingsAccountException;
 import br.winxbank.sistemabancario.Conta;

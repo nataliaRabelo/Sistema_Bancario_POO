@@ -11,13 +11,10 @@ public class RandomNumberGenerator {
     private static HashSet<Integer> numerosCsv = new HashSet<Integer>();
     private static HashSet<Integer> numerosConta = new HashSet<Integer>();
     private static HashSet<Integer> numerosCartao = new HashSet<Integer>();
+
     /**
-     * Este método é responsável por determinar um número mínimo, máximo e inicializar uma seed para geração de numeros aleatórios a partir dessa seed.
-     * Se o numero aleatorio gerado existir no HashSet, retorna para executar a função novamente por recursão, caso contrário, retorna o valor aleatório.
-     * @return int random;
+     * Print debug.
      */
-
-
     public static void printarHashSets(){
         System.out.println("HashSetCsv:");
         for(Integer n : numerosCsv){
@@ -33,6 +30,10 @@ public class RandomNumberGenerator {
         }
     }
 
+    /**
+     * Método responsável por gerar numeros aleatórios únicos para csv de cartões de três dígitos.
+     * @return
+     */
     public static int gerarCsv(){
         Random randomNum = new Random();
         int random = randomNum.nextInt(100, 999);
@@ -43,6 +44,10 @@ public class RandomNumberGenerator {
         return random;
     }
 
+    /**
+     * Método responsável por gerar números aleatórios únicos para numeros de conta de até 5 dígitos.
+     * @return
+     */
     public static int gerarNumConta(){
         Random randomNum = new Random();
         int random = randomNum.nextInt(10000, 99999);
@@ -53,6 +58,10 @@ public class RandomNumberGenerator {
         return random;
     }
 
+    /**
+     * Método responsável por gerar números aleatórios únicos para cartões de até 4 dígitos.
+     * @return
+     */
     public static int gerarNumCartao(){
         Random randomNum = new Random();
         int random = randomNum.nextInt(1000, 9999);
@@ -75,15 +84,4 @@ public class RandomNumberGenerator {
         numerosCartao.add(numero);
     }
 
-    public static HashSet<Integer> getNumerosCartao() {
-        return numerosCartao;
-    }
-
-    public static HashSet<Integer> getNumerosConta() {
-        return numerosConta;
-    }
-
-    public static HashSet<Integer> getNumerosCsv() {
-        return numerosCsv;
-    }
 }

@@ -1,10 +1,9 @@
 package br.winxbank;
 
 import br.winxbank.exception.*;
+import br.winxbank.repository.ArquivoBanco;
 import br.winxbank.repository.ArquivoDeClientes;
 import br.winxbank.repository.ArquivoDeMesAtual;
-import br.winxbank.repository.ArquivoExtrato;
-import br.winxbank.repository.ArquivoInformeRendimento;
 import br.winxbank.sistemabancario.*;
 import br.winxbank.sistemaclientes.Cliente;
 import br.winxbank.sistemaclientes.ClienteWinx;
@@ -32,14 +31,14 @@ public class Main {
         Cliente clienteAtual = new Cliente();
         ArquivoDeClientes.getInstancia().readjason();
         ArquivoDeMesAtual.getInstancia().lerMesAtual();
-        //RandomNumberGenerator.printarHashSets();
+        ArquivoBanco.getInstancia().construirBanco();
         RegistroDeClientes.getInstancia().printarListaDeClientes();
-            while (decisao == 1 || decisao == 2 || decisao == 3 || decisao == 4 || decisao == 5 || decisao == 6 || decisao == 7 || decisao == 8 || decisao == 9 || decisao == 10 || decisao == 11 || decisao == 12 || decisao == 13 || decisao == 14 || decisao == 15 || decisao == 16 || decisao == 17 || decisao == 18){
+            while (decisao == 1 || decisao == 2 || decisao == 3 || decisao == 4 || decisao == 5 || decisao == 6 || decisao == 7 || decisao == 8 || decisao == 9 || decisao == 10 || decisao == 11 || decisao == 12 || decisao == 13 || decisao == 14 || decisao == 15 || decisao == 16 || decisao == 17 || decisao == 18 || decisao == 19){
                 Scanner sc = new Scanner(System.in);
                 if(clienteAtual.getNome() != null){
                     visualizarClienteAtual(clienteAtual);
                     System.out.println("Mes atual: " + Ano.getInstancia().getMesAtual());
-                    System.out.println("          Bem-vindo ao WinxBank!\n      Ola, "+ clienteAtual.getNome() + " Digite o que deseja fazer:\n----------------- MENU INICIAL -----------------\n1 - (criar um usuario) \n2 - (logar em um usuario)\n--------------------- MENU ---------------------\n3 - (abrir conta)\n4 - (fechar conta)\n5 - (apagar usuario)\n6 - (depositar)\n7 - (comprar)\n8 - (fazer pix)\n9 - (sacar)\n10 - (pagar fatura)\n11 - (ajustar limite)\n12 - (pagar parcela emprestimo)\n13 - (requisitar emprestimo)\n14 - (converter pontos em saldo)\n15 - (gerar extrato)\n16 - (gerar informe rendimento)\n17 - (exibir clientes)\n18 - (limpar clientes)");
+                    System.out.println("          Bem-vindo ao WinxBank!\n      Ola, "+ clienteAtual.getNome() + " Digite o que deseja fazer:\n----------------- MENU INICIAL ----------------- \nqualquer outro numero - (encerrar programa) \n1 - (criar um usuario) \n2 - (logar em um usuario)\n--------------------- MENU ---------------------\n3 - (abrir conta)\n4 - (fechar conta)\n5 - (apagar usuario)\n6 - (depositar)\n7 - (comprar)\n8 - (fazer pix)\n9 - (sacar)\n10 - (pagar fatura)\n11 - (ajustar limite)\n12 - (pagar parcela emprestimo)\n13 - (requisitar emprestimo)\n14 - (converter pontos em saldo)\n15 - (gerar extrato)\n16 - (gerar informe rendimento)\n17 - (exibir clientes)\n18 - (limpar clientes)\n19 - (visualizar dados do banco)");
 
                 }
                 else if(clienteAtual.getNome() == null){
@@ -57,6 +56,7 @@ public class Main {
                             RegistroDeClientes.getInstancia().printarListaDeClientes();
                             break;
                         case 2: // LOGAR
+                            RegistroDeClientes.getInstancia().printarListaDeClientes();
                             System.out.println("Digite o cpf do usuario que deseja logar:");
                             sc.nextLine();
                             String cpf = sc.nextLine();
@@ -404,6 +404,9 @@ public class Main {
                         case 18: // RESETAR LISTA DE CLIENTES
                             RegistroDeClientes.getInstancia().limparListaDeClientes();
                             break;
+                        case 19: // EXIBIR DADOS DO BANCO
+                            Banco.getInstancia().printarBanco();
+                            break;
                         default:
                             break;
                     }
@@ -412,6 +415,7 @@ public class Main {
                 }finally {
                     ArquivoDeClientes.getInstancia().escreverJson(RegistroDeClientes.getInstancia().getClientes());
                     ArquivoDeMesAtual.getInstancia().escreverMesAtual();
+                    ArquivoBanco.getInstancia().atualizarArquivo(Banco.getInstancia());
                 }
             }
     }

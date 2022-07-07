@@ -1,7 +1,6 @@
 package br.winxbank.sistemabancario;
 
-import br.winxbank.repository.ArquivoExtrato;
-import br.winxbank.repository.ArquivoInformeRendimento;
+import br.winxbank.geradordedocumentos.ArquivoExtrato;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
