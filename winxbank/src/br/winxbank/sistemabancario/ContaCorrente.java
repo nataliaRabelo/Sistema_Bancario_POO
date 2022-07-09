@@ -33,7 +33,7 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas{
     }
 
     /**
-     * TODO: método de descontar taxa, pegar taxa de manutencao de conta da interface.
+     * Método responsável por descontar a taxa de uma conta corrente.
      */
     public void descontarTaxa(){
         this.saldo -= taxaManutencaoConta;
@@ -43,6 +43,10 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas{
 
     }
 
+    /**
+     * Método da interface MovimentacaoBancaria sobrescrito responsável por movimentar dinheiro ao banco.
+     * @param valor
+     */
     @Override
     public void movimentacaoBancaria(double valor) {
         Banco.getInstancia().setReceitas(valor);
@@ -58,6 +62,10 @@ public class ContaCorrente extends Conta implements OperacoesAutomaticas{
         return tipoDaConta;
     }
 
+    /**
+     * Método abstrato da classe conta sobrescrito responsável por realizar uma compra.
+     * @param valor
+     */
     @Override
     public void comprar(double valor) {
         Scanner sc = new Scanner(System.in);

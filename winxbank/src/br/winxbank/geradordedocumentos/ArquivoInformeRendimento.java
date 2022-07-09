@@ -27,7 +27,6 @@ public class ArquivoInformeRendimento {
             if(conta.getClass() != ContaPoupanca.class){
                 throw new BankAccountIsNotSavingsAccountException();
             }
-            ObjectOutputStream ous = null;
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(conta.getNumeroConta() + "informe.txt"))) {
                 writer.write("Mes atual: " + Ano.getInstancia().getMesAtual() + "\n");
                 writer.write("Saldo atual: " + new DecimalFormat("0.00").format(conta.getSaldo()) + "\n");

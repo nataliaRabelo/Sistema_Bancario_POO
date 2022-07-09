@@ -38,6 +38,9 @@ public class ClienteWinx extends Cliente{
         return pontosDeCompra;
     }
 
+    /**
+     * Método responsável por converter pontos de compra em saldo.
+     */
     public void obterPontosDeCompra(){
         this.pontosDeCompra = this.pontosDeCompra + 1;
     }

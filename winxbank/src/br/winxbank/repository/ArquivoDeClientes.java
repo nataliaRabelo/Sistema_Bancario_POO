@@ -35,6 +35,12 @@ public class ArquivoDeClientes {
         }
     }
 
+    /**
+     * Método responsável por popular os números aleatórios da classe RandomNumberGenerator.
+     * @param numConta
+     * @param numCartao
+     * @param csv
+     */
     public void popularRandomNumberGenerator(int numConta, int numCartao, int csv){
         RandomNumberGenerator.setNumerosConta(numConta);
         RandomNumberGenerator.setNumerosCartao(numCartao);

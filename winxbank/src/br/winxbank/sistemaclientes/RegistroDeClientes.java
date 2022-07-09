@@ -166,6 +166,9 @@ public class RegistroDeClientes {
         }
     }
 
+    /**
+     * Método responsável por resetar o registro de clientes.
+     */
     public void limparListaDeClientes(){
         clientes.clear();
     }

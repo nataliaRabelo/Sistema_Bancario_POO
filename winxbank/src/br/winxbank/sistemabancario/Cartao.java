@@ -18,6 +18,11 @@ public class Cartao{
         this.csv = csv;
     }
 
+    /**
+     * Método responsável por debitar uma conta.
+     * @param conta
+     * @param valor
+     */
     public void debitar(Conta conta, double valor){
         conta.setSaldo(-valor);
     }

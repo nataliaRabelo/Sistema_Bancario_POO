@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 /**
  * @author Natália, Dani, Carol
- * Aqui você conta a sua história.
+ * Classe de execução do programa.
  */
 public class Main {
 
@@ -38,7 +38,7 @@ public class Main {
                 if(clienteAtual.getNome() != null){
                     visualizarClienteAtual(clienteAtual);
                     System.out.println("Mes atual: " + Ano.getInstancia().getMesAtual());
-                    System.out.println("          Bem-vindo ao WinxBank!\n      Ola, "+ clienteAtual.getNome() + " Digite o que deseja fazer:\n----------------- MENU INICIAL ----------------- \nqualquer outro numero - (encerrar programa) \n1 - (criar um usuario) \n2 - (logar em um usuario)\n--------------------- MENU ---------------------\n3 - (abrir conta)\n4 - (fechar conta)\n5 - (apagar usuario)\n6 - (depositar)\n7 - (comprar)\n8 - (fazer pix)\n9 - (sacar)\n10 - (pagar fatura)\n11 - (ajustar limite)\n12 - (pagar parcela emprestimo)\n13 - (requisitar emprestimo)\n14 - (converter pontos em saldo)\n15 - (gerar extrato)\n16 - (gerar informe rendimento)\n17 - (exibir clientes)\n18 - (limpar clientes)\n19 - (visualizar dados do banco)");
+                    System.out.println("          Bem-vindo ao WinxBank!\n      Ola, "+ clienteAtual.getNome() + " Digite o que deseja fazer:\n----------------- MENU INICIAL ----------------- \n0 - (encerrar programa) \n1 - (criar um usuario) \n2 - (logar em um usuario)\n--------------------- MENU ---------------------\n3 - (abrir conta)\n4 - (fechar conta)\n5 - (apagar usuario)\n6 - (depositar)\n7 - (comprar)\n8 - (fazer pix)\n9 - (sacar)\n10 - (pagar fatura)\n11 - (ajustar limite)\n12 - (pagar parcela emprestimo)\n13 - (requisitar emprestimo)\n14 - (converter pontos em saldo)\n15 - (gerar extrato)\n16 - (gerar informe rendimento)\n17 - (exibir clientes)\n18 - (limpar clientes)\n19 - (visualizar dados do banco)");
 
                 }
                 else if(clienteAtual.getNome() == null){

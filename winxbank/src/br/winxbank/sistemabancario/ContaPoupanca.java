@@ -24,6 +24,10 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
         super(numeroConta, saldo, cartao, dividaDeEmprestimo);
     }
 
+    /**
+     * Método abstrato da classe conta sobrescrito responsável por realizar uma compra.
+     * @param valor
+     */
     @Override
     public void comprar(double valor) {
         Scanner sc = new Scanner(System.in);
@@ -73,6 +77,10 @@ public class ContaPoupanca extends Conta implements OperacoesAutomaticas{
         return this.informeRendimento;
     }
 
+    /**
+     * Método da interface MovimentacaoBancaria sobrescrito responsável por movimentar dinheiro ao banco.
+     * @param valor
+     */
     @Override
     public void movimentacaoBancaria(double valor) {
         Banco.getInstancia().setDespesas(valor);

@@ -39,6 +39,10 @@ public class Cliente{
 
     }
 
+    /**
+     * Método responsável por apagar uma conta.
+     * @param conta
+     */
     public void apagarConta(Conta conta) {
         this.contas.remove(conta);
     }
@@ -65,6 +69,10 @@ public class Cliente{
         return cpf;
     }
 
+    /**
+     * Método responsável por acessar as contas de um usuário.
+     * @return
+     */
     public Conta acessarContas() {
         for (Conta conta : this.contas){
             return conta;
